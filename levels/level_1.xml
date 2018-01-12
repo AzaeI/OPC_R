@@ -1,0 +1,44 @@
+<level>
+	<name>Level 1</name>
+	<version>1.0</version>
+	<gravity>0.1</gravity>
+	
+	<objects>
+		<object>
+			<type>Bird</type>
+			<class>ClassicBird</class>
+			<name>BB1</name>
+		</object>
+		
+		<object>
+			<type>Pig</type>
+			<class>ClassicPig</class>
+			<name>PP1</name>
+			
+			<posX>8</posX>
+			<posY>0</posY>
+		</object>
+		
+		<object>
+			<type>Decor</type>
+			<color>yellow</color>
+			<isMovable>true</isMovable>
+			<width>1</width>
+			<length>2</length>
+			<masse>1</masse>
+			<posX>10</posX>
+			<posY>0</posY>
+		</object>
+		
+		<object>
+			<type>Decor</type>
+			<color>pink</color>
+			<isMovable>false</isMovable>
+			<width>1</width>
+			<length>2</length>
+			<masse>1</masse>
+			<posX>4</posX>
+			<posY>0</posY>
+		</object>
+	</objects>
+</level>

@@ -1,5 +1,5 @@
 package game.objects;
 
-public abstract class Pig implements GameObject {
+public abstract class Pig extends Character {
 
 }
