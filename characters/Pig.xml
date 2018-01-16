@@ -1,0 +1,10 @@
+<pigs>
+	<pig>
+		<type>ClassicPig</type>
+		<color>BLUE</color>
+		<name>Blue_Pig</name>
+		<width>1</width>
+		<length>1</length>
+		<masse>1</masse>
+	</pig>
+</pigs>

@@ -6,13 +6,15 @@ public abstract class GameObject {
 
 	private Color color;
 	
-	private double posX;
-	private double posY;
+	private int posX;
+	private int posY;
 	
 	private int width;
 	private int length;
 	
 	private double masse;
+	
+	public abstract GameObject clone();
 
 	public Color getColor() {
 		return color;
@@ -22,19 +24,19 @@ public abstract class GameObject {
 		this.color = color;
 	}
 
-	public double getPosX() {
+	public int getPosX() {
 		return posX;
 	}
 
-	public void setPosX(double posX) {
+	public void setPosX(int posX) {
 		this.posX = posX;
 	}
 
-	public double getPosY() {
+	public int getPosY() {
 		return posY;
 	}
 
-	public void setPosY(double posY) {
+	public void setPosY(int posY) {
 		this.posY = posY;
 	}
 

@@ -3,26 +3,32 @@ package game.graphics;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
-import java.util.List;
+
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
-import game.tools.Tool;
+import game.Loader;
+import game.level.Level;
 
 public class LevelSelectorPanel extends Panel {
 
-	
+	private static final long serialVersionUID = 1L;
+
 	public LevelSelectorPanel() {
+		super();
+		setLayout(new GridLayout(0, 2));
 		setBackground(Color.gray);
-		JPanel p = new JPanel(new GridLayout(0, 2));
-		
-		List<String> names = Tool.levelsNames();
-		for (String n : names) {
-			p.add(new JLabel(n));
-			p.add(new JButton("Play"));
+
+		ArrayList<Level> levels = Loader.getInstance().getLevels();
+
+		for (Level level : levels) {
+			JLabel title = new JLabel(level.getName());
+			JButton b = new JButton("Play");
+			b.addActionListener(new PlayButtonListener(level));
+			add(title);
+			add(b);
 		}
-		add(p);
+
 	}
 }

@@ -1,6 +1,6 @@
 package game.objects;
 
-public class Character extends GameObject  {
+public abstract class Character extends GameObject  {
 
 	private String name;
 

@@ -1,5 +1,5 @@
 <level>
-	<name>Level 1</name>
+	<name>Level 2</name>
 	<version>1.0</version>
 	<gravity>0.1</gravity>
 	
@@ -8,21 +8,6 @@
 			<type>Bird</type>
 			<class>ClassicBird</class>
 			<order>1</order>
-		</object>
-		<object>
-			<type>Bird</type>
-			<class>ClassicBird</class>
-			<order>2</order>
-		</object>
-		<object>
-			<type>Bird</type>
-			<class>ClassicBird</class>
-			<order>3</order>
-		</object>
-		<object>
-			<type>Bird</type>
-			<class>ClassicBird</class>
-			<order>4</order>
 		</object>
 		
 		<object>
