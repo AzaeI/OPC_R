@@ -3,8 +3,8 @@
 		<type>ClassicBird</type>
 		<color>RED</color>
 		<name>Red_Bird</name>
-		<width>1</width>
-		<length>1</length>
+		<width>30</width>
+		<length>30</length>
 		<masse>1</masse>
 		<speed>1</speed>
 	</bird>

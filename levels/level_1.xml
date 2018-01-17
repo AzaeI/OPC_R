@@ -29,7 +29,7 @@
 			<type>Pig</type>
 			<class>ClassicPig</class>
 			
-			<posX>8</posX>
+			<posX>240</posX>
 			<posY>0</posY>
 		</object>
 		
@@ -38,11 +38,11 @@
 			<color>yellow</color>
 			<isMovable>true</isMovable>
 			
-			<width>1</width>
-			<length>2</length>
+			<width>30</width>
+			<length>60</length>
 			<masse>1</masse>
 			
-			<posX>10</posX>
+			<posX>300</posX>
 			<posY>0</posY>
 		</object>
 		
@@ -51,11 +51,11 @@
 			<color>pink</color>
 			<isMovable>false</isMovable>
 			
-			<width>1</width>
-			<length>2</length>
+			<width>30</width>
+			<length>60</length>
 			<masse>1</masse>
 			
-			<posX>4</posX>
+			<posX>120</posX>
 			<posY>0</posY>
 		</object>
 	</objects>

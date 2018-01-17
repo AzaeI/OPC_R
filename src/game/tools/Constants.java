@@ -10,5 +10,4 @@ public class Constants {
 	public final static String PIG_FILE = CHARACTERS_DIRECTORY + "/" + "Pig.xml";
 	public final static String BIRD_FILE = CHARACTERS_DIRECTORY + "/" + "Bird.xml";
 	
-	
 }
