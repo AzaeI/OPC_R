@@ -13,6 +13,9 @@ public abstract class GameObject {
 	private int length;
 	
 	private double masse;
+
+	private double velocityX;
+	private double velocityY;
 	
 	public abstract GameObject clone();
 
@@ -63,7 +66,20 @@ public abstract class GameObject {
 	public void setMasse(double masse) {
 		this.masse = masse;
 	}
-	
-	
-	
+
+	public double getVelocityX() {
+		return velocityX;
+	}
+
+	public void setVelocityX(double velocityX) {
+		this.velocityX = velocityX;
+	}
+
+	public double getVelocityY() {
+		return velocityY;
+	}
+
+	public void setVelocityY(double velocityY) {
+		this.velocityY = velocityY;
+	}
 }

@@ -4,6 +4,7 @@ public abstract class Bird extends Character {
 		
 	private double speed;
 	private int order;
+	private boolean isSelected;
 
 	public double getSpeed() {
 		return speed;
@@ -20,7 +21,12 @@ public abstract class Bird extends Character {
 	public void setOrder(int order) {
 		this.order = order;
 	}
-	
-	
-	
+
+	public boolean isSelected() {
+		return isSelected;
+	}
+
+	public void setSelected(boolean selected) {
+		isSelected = selected;
+	}
 }
