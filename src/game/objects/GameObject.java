@@ -16,6 +16,8 @@ public abstract class GameObject {
 
 	private double velocityX;
 	private double velocityY;
+
+
 	
 	public abstract GameObject clone();
 

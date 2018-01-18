@@ -1,14 +1,12 @@
 package game.graphics;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Stroke;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import game.level.Level;
@@ -17,6 +15,9 @@ import game.objects.Decor;
 import game.objects.GameObject;
 import game.objects.Pig;
 import game.tools.Constants;
+import game.tools.Tools;
+
+import javax.imageio.ImageIO;
 
 public class LevelPanel extends Panel implements MouseMotionListener, MouseListener, Runnable {
 
@@ -30,15 +31,27 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
 
     private final int SLINGSHOT_OFFSET = 50;
 
-    private final Point SLINGSHOT_CENTER = new Point(PLATEFORM_WIDTH - SLINGSHOT_WIDTH / 2,
+    private final Point SLINGSHOT_CENTER = new Point(
+            PLATEFORM_WIDTH - SLINGSHOT_WIDTH / 2,
             PLATEFORM_HEIGHT + SLINGSHOT_HEIGHT + SLINGSHOT_OFFSET / 2);
 
     private ArrayList<Decor> decors;
     private ArrayList<Bird> birds;
     private ArrayList<Pig> pigs;
 
+    BufferedImage backG;
+    {
+        try {
+            backG = ImageIO.read(new File(Constants.BG_FILE));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private Bird currentBird;
     private Level level;
+
+    private boolean initPanel = true;
 
     public LevelPanel(Level level) {
         super();
@@ -67,13 +80,10 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         }
         return null;
     }
-
-    public Level getLevel() {
-        return level;
-    }
-
-    public void setLevel(Level level) {
-        this.level = level;
+    private void newCurrentBird() {
+        for (Bird b: birds) {
+            b.setOrder(b.getOrder()-1);
+        }
     }
 
     private void init() {
@@ -99,12 +109,10 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         super.paintComponent(g2);
         Graphics2D g = (Graphics2D) g2;
 
+        g.drawImage(backG, 0, -200, null);
+
         g.translate(0, getHeight() - 1);
         g.scale(1, -1);
-
-        // FOND
-        g.setColor(Color.WHITE);
-        g.fillRect(0, 0, getWidth(), 0);
 
         // GROUND
         g.setColor(Color.BLACK);
@@ -134,6 +142,8 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
                 FOOTER + PLATEFORM_HEIGHT + SLINGSHOT_HEIGHT + SLINGSHOT_OFFSET);
         g.setStroke(s);
 
+
+
         for (Bird b: birds) {
             Sphere sp = new Sphere(b, g);
             sp.draw(0, FOOTER);
@@ -146,15 +156,12 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
             Cube c = new Cube(d, g);
             c.draw(OFFSET, FOOTER);
         }
-
-
     }
 
-    @Override
     public void mouseDragged(MouseEvent mouseEvent) {
-        if (distance(mouseEvent.getX(), getHeight() - mouseEvent.getY() - FOOTER,
+        if (Tools.distance(mouseEvent.getX(), getHeight() - mouseEvent.getY() - FOOTER,
                 SLINGSHOT_CENTER.x, SLINGSHOT_CENTER.y) < SLINGSHOT_CENTER.x) {
-            if (distance(currentBird.getPosX() + currentBird.getWidth() / 2,
+            if (Tools.distance(currentBird.getPosX() + currentBird.getWidth() / 2,
                     getHeight() - (currentBird.getPosY() + currentBird.getLength() / 2 + FOOTER),
                     mouseEvent.getX(),
                     mouseEvent.getY()) < currentBird.getWidth() * 2) {
@@ -165,24 +172,6 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
 
 
     }
-
-    @Override
-    public void mouseMoved(MouseEvent mouseEvent) {
-
-    }
-
-    private double distance(int x1, int y1, int x2, int y2) {
-        int dx = x1 - x2;
-        int dy = y1 - y2;
-        return Math.sqrt(dx * dx + dy * dy);
-    }
-
-    public void mouseClicked(MouseEvent mouseEvent) {
-    }
-
-    public void mousePressed(MouseEvent mouseEvent) {
-    }
-
     public void mouseReleased(MouseEvent mouseEvent) {
         currentBird.setVelocityX( (SLINGSHOT_CENTER.x - currentBird.getPosX() ) /20);
         currentBird.setVelocityY( (SLINGSHOT_CENTER.y - currentBird.getPosY() ) /20);
@@ -201,14 +190,6 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         }
     }
 
-
-    public void mouseEntered(MouseEvent mouseEvent) {
-    }
-
-    public void mouseExited(MouseEvent mouseEvent) {
-    }
-
-    @Override
     public void run() {
         while (true) {
             try { Thread.currentThread().sleep(10); } catch(InterruptedException e) { }
@@ -216,16 +197,26 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
                 if (b.isSelected()){
                     b.setPosX((int) (b.getPosX()+b.getVelocityX()));
                     b.setPosY((int) (b.getPosY()+b.getVelocityY()));
-                    b.setVelocityY(b.getVelocityY() - level.getGravity());
+                    level.getGravity().agis_sur_GameObject(b);
                 }
+            }
+            for (Pig p : pigs) {
+                level.getGravity().agis_sur_GameObject(p);
+            }
+            for (Decor d : decors) {
+                level.getGravity().agis_sur_GameObject(d);
             }
             repaint();
         }
     }
-    private void newCurrentBird() {
-        for (Bird b: birds) {
-            b.setOrder(b.getOrder()-1);
-        }
+
+    public boolean winCondition(){
+        return false;
     }
 
+    public void mouseEntered(MouseEvent mouseEvent) {}
+    public void mouseExited(MouseEvent mouseEvent) {}
+    public void mousePressed(MouseEvent mouseEvent) {}
+    public void mouseMoved(MouseEvent mouseEvent) {}
+    public void mouseClicked(MouseEvent mouseEvent) {}
 }

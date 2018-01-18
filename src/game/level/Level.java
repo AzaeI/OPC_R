@@ -3,18 +3,18 @@ package game.level;
 import java.util.ArrayList;
 import java.util.List;
 
-import game.graphics.Panel;
 import game.objects.GameObject;
+import game.objects.Gravity;
 
 public class Level {
 	private String name;
-	private double gravity;
+	private Gravity gravity;
 	private List<GameObject> objects;
 	
 	public Level(String name, double gravity, List<GameObject> objects) {
 		super();
 		this.name = name;
-		this.gravity = gravity;
+		this.gravity = new Gravity(gravity);
 		this.objects = objects;
 	}
 
@@ -22,7 +22,7 @@ public class Level {
 		return name;
 	}
 
-	public double getGravity() {
+	public Gravity getGravity() {
 		return gravity;
 	}
 
@@ -35,7 +35,7 @@ public class Level {
 		for (GameObject gameObject : objects) {
 			objs.add(gameObject.clone());
 		}
-		Level l = new Level(this.name, this.gravity, objs);
+		Level l = new Level(this.name, this.gravity.getEmplitude_gravity(), objs);
 		return l;
 	}
 	
