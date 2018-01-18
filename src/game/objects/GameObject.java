@@ -17,8 +17,11 @@ public abstract class GameObject {
 	private double velocityX;
 	private double velocityY;
 
+	private int hp;
 
-	
+	private String sprite;
+
+
 	public abstract GameObject clone();
 
 	public Color getColor() {
@@ -84,4 +87,20 @@ public abstract class GameObject {
 	public void setVelocityY(double velocityY) {
 		this.velocityY = velocityY;
 	}
+
+	public int getHp() {
+		return hp;
+	}
+
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+
+    public String getSprite() {
+        return sprite;
+    }
+
+    public void setSprite(String sprite) {
+        this.sprite = sprite;
+    }
 }

@@ -9,6 +9,9 @@ import java.util.HashMap;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import game.objects.impl.Bird.BlueBird;
+import game.objects.impl.Decor.Structure;
+import game.objects.impl.Pig.HelmetPig;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -19,8 +22,8 @@ import game.objects.Bird;
 import game.objects.Decor;
 import game.objects.GameObject;
 import game.objects.Pig;
-import game.objects.impl.ClassicBird;
-import game.objects.impl.ClassicPig;
+import game.objects.impl.Bird.ClassicBird;
+import game.objects.impl.Pig.ClassicPig;
 import game.tools.Constants;
 
 public class Loader {
@@ -30,10 +33,12 @@ public class Loader {
 	private ArrayList<Level> levels;
 	private HashMap<String, Bird> birds;
 	private HashMap<String, Pig> pigs;
+	private HashMap<String, Decor> decors;
 
 	private Loader() {
 		birds = loadBirds();
 		pigs = loadPigs();
+		decors = loadDecors();
 		levels = loadlevels();
 	}
 
@@ -76,17 +81,39 @@ public class Loader {
 
 	private Bird loadBird(String type, Element eElement) {
 		try {
+			Bird b;
+			String colorStr;
+			Field field;
 			switch (type) {
 			case "ClassicBird":
-				ClassicBird b = new ClassicBird();
-				String colorStr = eElement.getElementsByTagName("color").item(0).getTextContent();
-				Field field = Class.forName("java.awt.Color").getField(colorStr.toLowerCase());
+				b = new ClassicBird();
+				colorStr = eElement.getElementsByTagName("color").item(0).getTextContent();
+				field = Class.forName("java.awt.Color").getField(colorStr.toLowerCase());
 				b.setColor((Color) field.get(null));
 
 				b.setWidth(Integer.parseInt(eElement.getElementsByTagName("width").item(0).getTextContent()));
 				b.setLength(Integer.parseInt(eElement.getElementsByTagName("length").item(0).getTextContent()));
 				b.setMasse(Double.parseDouble(eElement.getElementsByTagName("masse").item(0).getTextContent()));
 				b.setSpeed(Double.parseDouble(eElement.getElementsByTagName("speed").item(0).getTextContent()));
+
+				b.setHp(Integer.parseInt(eElement.getElementsByTagName("hp").item(0).getTextContent()));
+
+				b.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
+				return b;
+			case "BlueBird":
+				b = new BlueBird();
+				colorStr = eElement.getElementsByTagName("color").item(0).getTextContent();
+				field = Class.forName("java.awt.Color").getField(colorStr.toLowerCase());
+				b.setColor((Color) field.get(null));
+
+				b.setWidth(Integer.parseInt(eElement.getElementsByTagName("width").item(0).getTextContent()));
+				b.setLength(Integer.parseInt(eElement.getElementsByTagName("length").item(0).getTextContent()));
+				b.setMasse(Double.parseDouble(eElement.getElementsByTagName("masse").item(0).getTextContent()));
+				b.setSpeed(Double.parseDouble(eElement.getElementsByTagName("speed").item(0).getTextContent()));
+
+				b.setHp(Integer.parseInt(eElement.getElementsByTagName("hp").item(0).getTextContent()));
+
+				b.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
 				return b;
 			default:
 				break;
@@ -115,8 +142,8 @@ public class Loader {
 
 					Element eElement = (Element) nNode;
 					String type = eElement.getElementsByTagName("type").item(0).getTextContent();
-					Pig b = loadPig(type, eElement);
-					lp.put(type, b);
+					Pig p = loadPig(type, eElement);
+					lp.put(type, p);
 				}
 			}
 		} catch (Exception e) {
@@ -127,19 +154,94 @@ public class Loader {
 
 	private Pig loadPig(String type, Element eElement) {
 		try {
+			Pig p;
+			String colorStr;
+			Field field;
 			switch (type) {
 			case "ClassicPig":
-				ClassicPig p = new ClassicPig();
-				String colorStr = eElement.getElementsByTagName("color").item(0).getTextContent();
-				Field field = Class.forName("java.awt.Color").getField(colorStr.toLowerCase());
+				p = new ClassicPig();
+				colorStr = eElement.getElementsByTagName("color").item(0).getTextContent();
+				field = Class.forName("java.awt.Color").getField(colorStr.toLowerCase());
 				p.setColor((Color) field.get(null));
 
 				p.setWidth(Integer.parseInt(eElement.getElementsByTagName("width").item(0).getTextContent()));
 				p.setLength(Integer.parseInt(eElement.getElementsByTagName("length").item(0).getTextContent()));
 				p.setMasse(Double.parseDouble(eElement.getElementsByTagName("masse").item(0).getTextContent()));
+
+				p.setHp(Integer.parseInt(eElement.getElementsByTagName("hp").item(0).getTextContent()));
+
+				p.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
+				return p;
+			case "HelmetPig":
+				p = new HelmetPig();
+				colorStr = eElement.getElementsByTagName("color").item(0).getTextContent();
+				field = Class.forName("java.awt.Color").getField(colorStr.toLowerCase());
+				p.setColor((Color) field.get(null));
+
+				p.setWidth(Integer.parseInt(eElement.getElementsByTagName("width").item(0).getTextContent()));
+				p.setLength(Integer.parseInt(eElement.getElementsByTagName("length").item(0).getTextContent()));
+				p.setMasse(Double.parseDouble(eElement.getElementsByTagName("masse").item(0).getTextContent()));
+
+				p.setHp(Integer.parseInt(eElement.getElementsByTagName("hp").item(0).getTextContent()));
+
+				p.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
 				return p;
 			default:
 				break;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	// DECOR
+	private HashMap<String,Decor> loadDecors(){
+		HashMap<String, Decor> ld = new HashMap<>();
+
+		File f = new File(Constants.DECOR_FILE);
+		try {
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(f);
+
+			NodeList objects = doc.getElementsByTagName("decor");
+
+			for (int temp = 0; temp < objects.getLength(); temp++) {
+				Node nNode = objects.item(temp);
+				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+					Element eElement = (Element) nNode;
+					String type = eElement.getElementsByTagName("type").item(0).getTextContent();
+					Decor d = loadDecor(type, eElement);
+					ld.put(type, d);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ld;
+	}
+
+	private Decor loadDecor(String type, Element eElement){
+		Decor d;
+		String colorStr;
+		Field field;
+		try {
+			switch (type) {
+				case "Structure":
+					d = new Structure();
+					colorStr = eElement.getElementsByTagName("color").item(0).getTextContent();
+					field = Class.forName("java.awt.Color").getField(colorStr.toLowerCase());
+					d.setColor((Color) field.get(null));
+					d.setMovable(Boolean.parseBoolean(eElement.getElementsByTagName("isMovable").item(0).getTextContent()));
+					d.setMasse(Double.parseDouble(eElement.getElementsByTagName("masse").item(0).getTextContent()));
+					d.setHp(Integer.parseInt(eElement.getElementsByTagName("hp").item(0).getTextContent()));
+
+					d.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
+					return d;
+				default:
+					break;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -215,18 +317,16 @@ public class Loader {
 				}
 				break;
 			case "Decor":
-				Decor d = new Decor();
-				d.setMovable(Boolean.parseBoolean(eElement.getElementsByTagName("isMovable").item(0).getTextContent()));
-				d.setWidth(Integer.parseInt(eElement.getElementsByTagName("width").item(0).getTextContent()));
-				d.setLength(Integer.parseInt(eElement.getElementsByTagName("length").item(0).getTextContent()));
-				d.setPosX(Integer.parseInt(eElement.getElementsByTagName("posX").item(0).getTextContent()));
-				d.setPosY(Integer.parseInt(eElement.getElementsByTagName("posY").item(0).getTextContent()));
-				d.setMasse(Integer.parseInt(eElement.getElementsByTagName("masse").item(0).getTextContent()));
-
-				String colorStr = eElement.getElementsByTagName("color").item(0).getTextContent();
-				Field field = Class.forName("java.awt.Color").getField(colorStr.toLowerCase());
-				d.setColor((Color) field.get(null));
-				return d;
+				classe = eElement.getElementsByTagName("class").item(0).getTextContent();
+				if (decors.containsKey(classe)) {
+					Decor d = (Decor) decors.get(classe).clone();
+					d.setWidth(Integer.parseInt(eElement.getElementsByTagName("width").item(0).getTextContent()));
+					d.setLength(Integer.parseInt(eElement.getElementsByTagName("length").item(0).getTextContent()));
+					d.setPosX(Integer.parseInt(eElement.getElementsByTagName("posX").item(0).getTextContent()));
+					d.setPosY(Integer.parseInt(eElement.getElementsByTagName("posY").item(0).getTextContent()));
+					return d;
+				}
+				break;
 			default:
 				return null;
 			}

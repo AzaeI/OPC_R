@@ -1,4 +1,4 @@
-package game.objects.impl;
+package game.objects.impl.Pig;
 
 import game.objects.Character;
 import game.objects.Pig;
@@ -13,6 +13,8 @@ public class ClassicPig extends Pig {
 		p.setLength(this.getLength());
 		p.setMasse(this.getMasse());
 		p.setName(this.getName());
+		p.setHp(this.getHp());
+		p.setSprite(this.getSprite());
 		return p;
 	}
 

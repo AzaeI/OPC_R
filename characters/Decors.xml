@@ -1,0 +1,10 @@
+<decors>
+    <decor>
+        <type>Structure</type>
+        <hp>9999999</hp>
+        <sprite>wall1.png</sprite>
+        <isMovable>false</isMovable>
+        <masse>100</masse>
+        <color>BLACK</color>
+    </decor>
+</decors>

@@ -1,4 +1,4 @@
-package game.objects.impl;
+package game.objects.impl.Bird;
 
 import game.objects.Bird;
 import game.objects.Character;
@@ -14,6 +14,8 @@ public class ClassicBird extends Bird {
 		b.setMasse(this.getMasse());
 		b.setName(this.getName());
 		b.setSpeed(this.getSpeed());
+		b.setHp(this.getHp());
+		b.setSprite(this.getSprite());
 		return b;
 	}
 

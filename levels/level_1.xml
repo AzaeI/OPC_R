@@ -35,12 +35,10 @@
 		
 		<object>
 			<type>Decor</type>
-			<color>yellow</color>
-			<isMovable>true</isMovable>
-			
+			<class>Structure</class>
+
 			<width>30</width>
 			<length>60</length>
-			<masse>1</masse>
 			
 			<posX>300</posX>
 			<posY>0</posY>
@@ -48,13 +46,11 @@
 		
 		<object>
 			<type>Decor</type>
-			<color>pink</color>
-			<isMovable>false</isMovable>
-			
+			<class>Structure</class>
+
 			<width>30</width>
 			<length>60</length>
-			<masse>1</masse>
-			
+
 			<posX>120</posX>
 			<posY>0</posY>
 		</object>
