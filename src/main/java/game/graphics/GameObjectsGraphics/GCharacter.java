@@ -1,6 +1,8 @@
 package game.graphics.GameObjectsGraphics;
 
+import game.objects.Character;
 import game.objects.GameObject;
+import game.objects.GameObjectState;
 import game.tools.Tools;
 
 import javax.imageio.ImageIO;
@@ -42,6 +44,18 @@ public class GCharacter implements GGameObject {
 
     public void draw(int OFFSET, int FOOTER) {
         g.setColor(go.getColor());
-        g.drawImage(sprite_1, go.getPosX()+OFFSET, go.getPosY()+FOOTER,null);
+        Character c = (Character) go;
+        switch (c.getState()) {
+        case IDLE:
+            g.drawImage(sprite_1, go.getPosX()+OFFSET, go.getPosY()+FOOTER,null);
+            break;
+        case FLYING:
+            g.drawImage(sprite_2, go.getPosX()+OFFSET, go.getPosY()+FOOTER,null);
+            break;
+        case DEAD:
+            g.drawImage(sprite_3, go.getPosX()+OFFSET, go.getPosY()+FOOTER,null);
+            break;
+        }
+
     }
 }

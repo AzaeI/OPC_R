@@ -13,10 +13,7 @@ import java.util.ArrayList;
 import game.graphics.GameObjectsGraphics.GCharacter;
 import game.graphics.GameObjectsGraphics.GDecor;
 import game.level.Level;
-import game.objects.Bird;
-import game.objects.Decor;
-import game.objects.GameObject;
-import game.objects.Pig;
+import game.objects.*;
 import game.tools.Constants;
 import game.tools.Tools;
 
@@ -200,10 +197,15 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
                     b.setPosX((int) (b.getPosX()+b.getVelocityX()));
                     b.setPosY((int) (b.getPosY()+b.getVelocityY()));
                     level.getGravity().agis_sur_GameObject(b);
+                    b.setState(GameObjectState.FLYING);
+                } else {
+                    b.setState(GameObjectState.IDLE);
                 }
+
             }
             for (Pig p : pigs) {
                 level.getGravity().agis_sur_GameObject(p);
+                p.setState(GameObjectState.IDLE);
             }
             for (Decor d : decors) {
                 level.getGravity().agis_sur_GameObject(d);

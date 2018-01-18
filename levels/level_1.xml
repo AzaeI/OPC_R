@@ -11,19 +11,10 @@
 		</object>
 		<object>
 			<type>Bird</type>
-			<class>ClassicBird</class>
+			<class>BlueBird</class>
 			<order>2</order>
 		</object>
-		<object>
-			<type>Bird</type>
-			<class>BlueBird</class>
-			<order>3</order>
-		</object>
-		<object>
-			<type>Bird</type>
-			<class>ClassicBird</class>
-			<order>4</order>
-		</object>
+
 		
 		<object>
 			<type>Pig</type>
@@ -38,7 +29,7 @@
 			<class>Structure</class>
 
 			<width>30</width>
-			<length>60</length>
+			<length>180</length>
 			
 			<posX>300</posX>
 			<posY>0</posY>
@@ -51,7 +42,7 @@
 			<width>30</width>
 			<length>60</length>
 
-			<posX>120</posX>
+			<posX>180</posX>
 			<posY>0</posY>
 		</object>
 	</objects>
