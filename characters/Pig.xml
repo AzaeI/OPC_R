@@ -3,8 +3,8 @@
 		<type>ClassicPig</type>
 		<color>BLUE</color>
 		<name>Blue_Pig</name>
-		<width>30</width>
-		<length>30</length>
+		<width>60</width>
+		<length>60</length>
 		<masse>1</masse>
 		<hp>2</hp>
 		<sprite>pig_classic</sprite>

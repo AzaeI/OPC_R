@@ -1,15 +1,14 @@
-package game.graphics;
+package game.graphics.GameObjectsGraphics;
 
 import game.objects.GameObject;
-import game.tools.Constants;
 
 import java.awt.*;
 
-public class Cube implements Shape {
+public class GDecor implements GGameObject {
     private GameObject go;
     private Graphics2D g;
 
-    public Cube(GameObject go, Graphics2D g) {
+    public GDecor(GameObject go, Graphics2D g) {
         this.go = go;
         this.g = g;
     }

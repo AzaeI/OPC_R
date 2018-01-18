@@ -1,5 +1,7 @@
 package game.objects;
 
+import game.tools.Constants;
+
 import java.awt.Color;
 
 public abstract class GameObject {
@@ -98,6 +100,13 @@ public abstract class GameObject {
 
     public String getSprite() {
         return sprite;
+    }
+
+    public String getFullSprite() {
+	    if (this instanceof Bird) return Constants.BIRD_IMG + "/" + sprite;
+	    else if (this instanceof Pig) return Constants.PIGS_IMG + "/" + sprite;
+	    else if (this instanceof Decor) return Constants.DECOR_IMG +  "/" + sprite;
+	    else return "";
     }
 
     public void setSprite(String sprite) {

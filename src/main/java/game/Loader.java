@@ -54,7 +54,7 @@ public class Loader {
 
 	// BIRD
 	private HashMap<String, Bird> loadBirds() {
-		HashMap<String, Bird> lb = new HashMap<>();
+		HashMap<String, Bird> lb = new HashMap();
 
 		File f = new File(Constants.BIRD_FILE);
 		try {
@@ -126,7 +126,7 @@ public class Loader {
 
 	// PIG
 	private HashMap<String, Pig> loadPigs() {
-		HashMap<String, Pig> lp = new HashMap<>();
+		HashMap<String, Pig> lp = new HashMap();
 
 		File f = new File(Constants.PIG_FILE);
 		try {

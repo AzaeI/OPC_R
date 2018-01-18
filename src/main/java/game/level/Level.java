@@ -31,7 +31,7 @@ public class Level {
 	}
 	
 	public Level clone() {
-		ArrayList<GameObject> objs = new ArrayList<>();
+		ArrayList<GameObject> objs = new ArrayList();
 		for (GameObject gameObject : objects) {
 			objs.add(gameObject.clone());
 		}

@@ -4,11 +4,14 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import game.graphics.GameObjectsGraphics.GCharacter;
+import game.graphics.GameObjectsGraphics.GDecor;
 import game.level.Level;
 import game.objects.Bird;
 import game.objects.Decor;
@@ -57,9 +60,9 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         super();
         this.level = level;
 
-        decors = new ArrayList<>();
-        birds = new ArrayList<>();
-        pigs = new ArrayList<>();
+        decors = new ArrayList();
+        birds = new ArrayList();
+        pigs = new ArrayList();
 
         init();
         currentBird = getFirstBird();
@@ -143,18 +146,17 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         g.setStroke(s);
 
 
-
         for (Bird b: birds) {
-            Sphere sp = new Sphere(b, g);
-            sp.draw(0, FOOTER);
+            GCharacter bird = new GCharacter(b, g);
+            bird.draw(0, FOOTER);
         }
         for (Pig p : pigs) {
-            Sphere sp = new Sphere(p, g);
-            sp.draw(OFFSET, FOOTER);
+            GCharacter pig = new GCharacter(p, g);
+            pig.draw(OFFSET, FOOTER);
         }
         for (Decor d :decors) {
-            Cube c = new Cube(d, g);
-            c.draw(OFFSET, FOOTER);
+            GDecor decor = new GDecor(d, g);
+            decor.draw(OFFSET, FOOTER);
         }
     }
 
