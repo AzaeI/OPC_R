@@ -13,8 +13,8 @@
 		<type>HelmetPig</type>
 		<color>BLUE</color>
 		<name>Helmet_Pig</name>
-		<width>30</width>
-		<length>30</length>
+		<width>60</width>
+		<length>60</length>
 		<masse>1</masse>
 		<hp>4</hp>
 		<sprite>pig_helmet</sprite>

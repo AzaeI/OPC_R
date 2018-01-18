@@ -1,14 +1,12 @@
 package game.graphics.GameObjectsGraphics;
 
 import game.objects.GameObject;
-import game.tools.Constants;
 import game.tools.Tools;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
 public class GCharacter implements GGameObject {
     private GameObject go;
@@ -44,10 +42,6 @@ public class GCharacter implements GGameObject {
 
     public void draw(int OFFSET, int FOOTER) {
         g.setColor(go.getColor());
-        /*g.fillOval(go.getPosX() + OFFSET,
-                go.getPosY()+ FOOTER,
-                go.getWidth(),
-                go.getLength());*/
         g.drawImage(sprite_1, go.getPosX()+OFFSET, go.getPosY()+FOOTER,null);
     }
 }

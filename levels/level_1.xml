@@ -16,7 +16,7 @@
 		</object>
 		<object>
 			<type>Bird</type>
-			<class>ClassicBird</class>
+			<class>BlueBird</class>
 			<order>3</order>
 		</object>
 		<object>
@@ -27,7 +27,7 @@
 		
 		<object>
 			<type>Pig</type>
-			<class>ClassicPig</class>
+			<class>HelmetPig</class>
 			
 			<posX>240</posX>
 			<posY>0</posY>
