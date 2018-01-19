@@ -12,4 +12,7 @@ public abstract class Decor extends GameObject {
 		this.isMovable = isMovable;
 	}
 
+	public void collisionWith(GameObject g) {
+	}
+
 }

@@ -5,12 +5,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import game.Loader;
+import game.engine.CollisionManager;
 import game.graphics.GameObjectsGraphics.GCharacter;
 import game.graphics.GameObjectsGraphics.GDecor;
 import game.level.Level;
@@ -35,7 +38,7 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
 
     private final Point SLINGSHOT_CENTER = new Point(
             PLATEFORM_WIDTH - SLINGSHOT_WIDTH / 2,
-            PLATEFORM_HEIGHT + SLINGSHOT_HEIGHT + SLINGSHOT_OFFSET / 2);
+            PLATEFORM_HEIGHT + SLINGSHOT_HEIGHT + FOOTER + SLINGSHOT_OFFSET / 2);
 
     private ArrayList<Decor> decors;
     private ArrayList<Bird> birds;
@@ -45,7 +48,7 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
     private ArrayList<GCharacter> gBirds;
     private ArrayList<GCharacter> gPigs;
 
-    BufferedImage backG;
+    private BufferedImage backG;
     {
         try {
             backG = ImageIO.read(new File(Constants.BG_FILE));
@@ -53,6 +56,10 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
             e.printStackTrace();
         }
     }
+
+    private int timerRelaodBird = 1000; //1sec
+
+    private CollisionManager collisionManager;
 
     private Bird currentBird;
     private Level level;
@@ -102,43 +109,53 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
                 Bird b = (Bird) o;
                 if (b.getOrder() > 1) {
                     b.setPosX(PLATEFORM_WIDTH - b.getWidth() * b.getOrder());
-                    b.setPosY(PLATEFORM_HEIGHT);
+                    b.setPosY(PLATEFORM_HEIGHT + FOOTER);
                 }
                 birds.add(b);
                 gBirds.add(new GCharacter(b));
             } else if (o instanceof Pig) {
                 Pig p = (Pig) o;
+                p.setPosX(p.getPosX()+OFFSET);
+                p.setPosY(p.getPosY()+FOOTER);
                 pigs.add(p);
                 gPigs.add(new GCharacter(p));
             } else if (o instanceof Decor) {
                 Decor d = (Decor) o;
+                d.setPosX(d.getPosX()+OFFSET);
+                d.setPosY(d.getPosY()+FOOTER);
                 decors.add(d);
                 gDecors.add(new GDecor(d));
             }
         }
         //STRUCTURE
         Decor d = (Decor) Loader.getInstance().getDecors().get("Structure").clone();
-        d.setPosY(0);
-        d.setPosX(-OFFSET);
+        d.setPosY(FOOTER);
+        d.setPosX(0);
         d.setWidth(PLATEFORM_WIDTH);
         d.setLength(PLATEFORM_HEIGHT);
         gDecors.add(new GDecor(d));
 
         //GROUND
         Decor g = (Decor) Loader.getInstance().getDecors().get("Ground").clone();
-        g.setPosY(-FOOTER);
-        g.setPosX(-OFFSET);
+        g.setPosY(0);
+        g.setPosX(0);
         g.setWidth(Frame.getInstance().getWidth());
         g.setLength(FOOTER-30);
         gDecors.add(new GDecor(g));
 
         //GRASS
         Decor gr = (Decor) Loader.getInstance().getDecors().get("Structure").clone();
-        gr.setPosY(-FOOTER+30);
-        gr.setPosX(-OFFSET);
+        gr.setPosY(FOOTER-30);
+        gr.setPosX(0);
         gr.setWidth(Frame.getInstance().getWidth());
         gr.setLength(30);
         gDecors.add(new GDecor(gr));
+
+        level.getObjects().add(gr);
+        level.getObjects().add(d);
+
+        collisionManager = new CollisionManager(level.getObjects());
+
     }
 
     public void paintComponent(Graphics g2) {
@@ -172,52 +189,63 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
 
 
         for (GDecor d : gDecors) {
-            d.draw(OFFSET, FOOTER, g);
+            d.draw(g);
         }
         for (GCharacter b: gBirds) {
-            b.draw(0, FOOTER, g);
+            b.draw(g);
         }
         for (GCharacter p : gPigs) {
-            p.draw(OFFSET, FOOTER, g);
+            p.draw(g);
         }
-
     }
 
     public void mouseDragged(MouseEvent mouseEvent) {
-        if (Tools.distance(mouseEvent.getX(), getHeight() - mouseEvent.getY() - FOOTER,
+        /*if (Tools.distance(mouseEvent.getX(), getHeight() - mouseEvent.getY(),
                 SLINGSHOT_CENTER.x, SLINGSHOT_CENTER.y) < SLINGSHOT_CENTER.x) {
             if (Tools.distance(currentBird.getPosX() + currentBird.getWidth() / 2,
-                    getHeight() - (currentBird.getPosY() + currentBird.getLength() / 2 + FOOTER),
+                    getHeight() - (currentBird.getPosY() + currentBird.getLength() / 2 ),
                     mouseEvent.getX(),
-                    mouseEvent.getY()) < currentBird.getWidth() * 2) {
+                    mouseEvent.getY()) < currentBird.getWidth() * 2) {*/
                 getFirstBird().setPosX(mouseEvent.getX() - currentBird.getWidth() / 2);
-                getFirstBird().setPosY(getHeight() - mouseEvent.getY() - currentBird.getLength() / 2 - FOOTER);
-            }
+                getFirstBird().setPosY(getHeight() - mouseEvent.getY() - currentBird.getLength() / 2 );
+       /*     }
         }
-
+*/
 
     }
     public void mouseReleased(MouseEvent mouseEvent) {
-        currentBird.setVelocityX( (SLINGSHOT_CENTER.x - currentBird.getPosX() ) /20);
-        currentBird.setVelocityY( (SLINGSHOT_CENTER.y - currentBird.getPosY() ) /20);
+        currentBird.setVelocityX( currentBird.getSpeed() * (SLINGSHOT_CENTER.x - currentBird.getPosX() ) /20);
+        currentBird.setVelocityY( currentBird.getSpeed() * (SLINGSHOT_CENTER.y - currentBird.getPosY() ) /20);
         currentBird.setSelected(true);
-        newCurrentBird();
-        currentBird = getFirstBird();
-        if (currentBird != null) {
-            currentBird.setPosX(SLINGSHOT_CENTER.x - ((currentBird.getWidth()) / 2));
-            currentBird.setPosY(SLINGSHOT_CENTER.y - ((currentBird.getLength()) / 2));
-            for (Bird b : birds) {
-                if (b.getOrder() > 1) {
-                    b.setPosX(PLATEFORM_WIDTH - b.getWidth() * b.getOrder());
-                    b.setPosY(PLATEFORM_HEIGHT);
-                }
-            }
-        }
+        currentBird  = null;
     }
+
+
 
     public void run() {
         while (true) {
             try { Thread.currentThread().sleep(10); } catch(InterruptedException e) { }
+            collisionManager.checkCollision();
+            if (currentBird == null) {
+                timerRelaodBird-=10;
+            }
+            if (currentBird == null && timerRelaodBird == 0) {
+                timerRelaodBird = 1000;
+                newCurrentBird();
+                currentBird = getFirstBird();
+                if (currentBird != null) {
+                    currentBird.setPosX(SLINGSHOT_CENTER.x - ((currentBird.getWidth()) / 2));
+                    currentBird.setPosY(SLINGSHOT_CENTER.y - ((currentBird.getLength()) / 2));
+
+                    for (Bird b : birds) {
+                        if (b.getOrder() > 1) {
+                            b.setPosX(PLATEFORM_WIDTH - b.getWidth() * b.getOrder());
+                            b.setPosY(PLATEFORM_HEIGHT);
+                        }
+                    }
+                }
+            }
+
             for (Bird b : birds) {
                 if (b.isSelected()){
                     b.setPosX((int) (b.getPosX()+b.getVelocityX()));

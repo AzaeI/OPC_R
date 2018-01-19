@@ -20,5 +20,7 @@ public class Constants {
 
 
     public final static String BG_FILE = IMAGE_DIRECTORY+ "/bg.jpg";
+
+    public final static boolean DEBUG = false;
 	
 }

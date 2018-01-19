@@ -10,6 +10,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import game.objects.impl.Bird.BlueBird;
+import game.objects.impl.Decor.Grass;
+import game.objects.impl.Decor.Ground;
 import game.objects.impl.Decor.Structure;
 import game.objects.impl.Pig.HelmetPig;
 import org.w3c.dom.Document;
@@ -253,7 +255,7 @@ public class Loader {
 					d.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
 					return d;
 				case "Ground":
-					d = new Structure();
+					d = new Ground();
 					colorStr = eElement.getElementsByTagName("color").item(0).getTextContent();
 					field = Class.forName("java.awt.Color").getField(colorStr.toLowerCase());
 					d.setColor((Color) field.get(null));
@@ -264,7 +266,7 @@ public class Loader {
 					d.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
 					return d;
 				case "Grass":
-					d = new Structure();
+					d = new Grass();
 					colorStr = eElement.getElementsByTagName("color").item(0).getTextContent();
 					field = Class.forName("java.awt.Color").getField(colorStr.toLowerCase());
 					d.setColor((Color) field.get(null));

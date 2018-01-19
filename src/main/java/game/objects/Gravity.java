@@ -21,6 +21,11 @@ public class Gravity  extends GameObject {
     }
 
     @Override
+    public void collisionWith(GameObject g) {
+
+    }
+
+    @Override
     public GameObject clone() {
         return null;
     }

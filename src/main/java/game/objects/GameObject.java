@@ -23,6 +23,9 @@ public abstract class GameObject {
 
 	private String sprite;
 
+	private GameObjectState state;
+
+	public abstract void collisionWith(GameObject g);
 
 	public abstract GameObject clone();
 
@@ -112,4 +115,12 @@ public abstract class GameObject {
     public void setSprite(String sprite) {
         this.sprite = sprite;
     }
+
+	public GameObjectState getState() {
+		return state;
+	}
+
+	public void setState(GameObjectState state) {
+		this.state = state;
+	}
 }

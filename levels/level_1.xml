@@ -15,11 +15,11 @@
 			<order>2</order>
 		</object>
 
-		
+
 		<object>
 			<type>Pig</type>
 			<class>HelmetPig</class>
-			
+
 			<posX>240</posX>
 			<posY>0</posY>
 		</object>

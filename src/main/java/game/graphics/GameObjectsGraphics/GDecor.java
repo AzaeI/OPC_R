@@ -1,10 +1,12 @@
 package game.graphics.GameObjectsGraphics;
 
 import game.objects.GameObject;
+import game.tools.Constants;
 import game.tools.Tools;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -25,15 +27,20 @@ public class GDecor implements GGameObject {
         return go;
     }
 
-    public void draw(int OFFSET, int FOOTER, Graphics2D g) {
+    public void draw(Graphics2D g) {
         int iw = sprite.getWidth();
         int ih = sprite.getHeight();
         if (iw > 0 && ih > 0) {
-            for (int x = go.getPosX() + OFFSET; x < go.getWidth() + go.getPosX() + OFFSET; x += iw) {
-                for (int y = go.getPosY() + FOOTER; y < go.getLength()+go.getPosY() + FOOTER; y += ih) {
+            for (int x = go.getPosX(); x < go.getWidth() + go.getPosX(); x += iw) {
+                for (int y = go.getPosY(); y < go.getLength()+go.getPosY(); y += ih) {
                     g.drawImage(sprite, x, y, iw, ih, null);
                 }
             }
+        }
+        if (Constants.DEBUG) {
+            g.setColor(Color.RED);
+            Rectangle2D r2 = new Rectangle2D.Double(go.getPosX(), go.getPosY(), go.getWidth(), go.getLength());
+            g.draw(r2);
         }
     }
 }

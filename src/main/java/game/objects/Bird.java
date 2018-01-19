@@ -29,4 +29,7 @@ public abstract class Bird extends Character {
 	public void setSelected(boolean selected) {
 		isSelected = selected;
 	}
+
+	public void collisionWith(GameObject g) {
+	}
 }

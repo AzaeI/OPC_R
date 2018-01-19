@@ -3,10 +3,12 @@ package game.graphics.GameObjectsGraphics;
 import game.objects.Character;
 import game.objects.GameObject;
 import game.objects.GameObjectState;
+import game.tools.Constants;
 import game.tools.Tools;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -36,20 +38,25 @@ public class GCharacter implements GGameObject {
         return go;
     }
 
-    public void draw(int OFFSET, int FOOTER, Graphics2D g) {
+    public void draw(Graphics2D g) {
         g.setColor(go.getColor());
         Character c = (Character) go;
         switch (c.getState()) {
         case IDLE:
-            g.drawImage(sprite_1, go.getPosX()+OFFSET, go.getPosY()+FOOTER,null);
+            g.drawImage(sprite_1, go.getPosX(), go.getPosY(),null);
             break;
         case FLYING:
-            g.drawImage(sprite_2, go.getPosX()+OFFSET, go.getPosY()+FOOTER,null);
+            g.drawImage(sprite_2, go.getPosX(), go.getPosY(),null);
             break;
         case DEAD:
-            g.drawImage(sprite_3, go.getPosX()+OFFSET, go.getPosY()+FOOTER,null);
+            g.drawImage(sprite_3, go.getPosX(), go.getPosY(),null);
             break;
         }
-
+        if (Constants.DEBUG) {
+            RoundRectangle2D r2 = new RoundRectangle2D.Double(go.getPosX(), go.getPosY(),
+                    go.getLength(), go.getWidth(),
+                    go.getLength(), go.getWidth());
+            g.draw(r2);
+        }
     }
 }
