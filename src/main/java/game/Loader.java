@@ -52,6 +52,18 @@ public class Loader {
 		return levels;
 	}
 
+	public HashMap<String, Bird> getBirds() {
+		return birds;
+	}
+
+	public HashMap<String, Pig> getPigs() {
+		return pigs;
+	}
+
+	public HashMap<String, Decor> getDecors() {
+		return decors;
+	}
+
 	// BIRD
 	private HashMap<String, Bird> loadBirds() {
 		HashMap<String, Bird> lb = new HashMap();
@@ -230,6 +242,28 @@ public class Loader {
 		try {
 			switch (type) {
 				case "Structure":
+					d = new Structure();
+					colorStr = eElement.getElementsByTagName("color").item(0).getTextContent();
+					field = Class.forName("java.awt.Color").getField(colorStr.toLowerCase());
+					d.setColor((Color) field.get(null));
+					d.setMovable(Boolean.parseBoolean(eElement.getElementsByTagName("isMovable").item(0).getTextContent()));
+					d.setMasse(Double.parseDouble(eElement.getElementsByTagName("masse").item(0).getTextContent()));
+					d.setHp(Integer.parseInt(eElement.getElementsByTagName("hp").item(0).getTextContent()));
+
+					d.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
+					return d;
+				case "Ground":
+					d = new Structure();
+					colorStr = eElement.getElementsByTagName("color").item(0).getTextContent();
+					field = Class.forName("java.awt.Color").getField(colorStr.toLowerCase());
+					d.setColor((Color) field.get(null));
+					d.setMovable(Boolean.parseBoolean(eElement.getElementsByTagName("isMovable").item(0).getTextContent()));
+					d.setMasse(Double.parseDouble(eElement.getElementsByTagName("masse").item(0).getTextContent()));
+					d.setHp(Integer.parseInt(eElement.getElementsByTagName("hp").item(0).getTextContent()));
+
+					d.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
+					return d;
+				case "Grass":
 					d = new Structure();
 					colorStr = eElement.getElementsByTagName("color").item(0).getTextContent();
 					field = Class.forName("java.awt.Color").getField(colorStr.toLowerCase());

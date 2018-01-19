@@ -12,15 +12,13 @@ import java.io.File;
 
 public class GCharacter implements GGameObject {
     private GameObject go;
-    private Graphics2D g;
 
     BufferedImage sprite_1;
     BufferedImage sprite_2;
     BufferedImage sprite_3;
 
-    public GCharacter(GameObject go, Graphics2D g) {
+    public GCharacter(GameObject go) {
         this.go = go;
-        this.g = g;
 
         try {
             sprite_1 = ImageIO.read(new File(go.getFullSprite()+"_1.png"));
@@ -38,11 +36,7 @@ public class GCharacter implements GGameObject {
         return go;
     }
 
-    public Graphics2D getG() {
-        return g;
-    }
-
-    public void draw(int OFFSET, int FOOTER) {
+    public void draw(int OFFSET, int FOOTER, Graphics2D g) {
         g.setColor(go.getColor());
         Character c = (Character) go;
         switch (c.getState()) {

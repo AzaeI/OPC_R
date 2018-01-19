@@ -10,21 +10,23 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import game.Loader;
 import game.graphics.GameObjectsGraphics.GCharacter;
 import game.graphics.GameObjectsGraphics.GDecor;
 import game.level.Level;
 import game.objects.*;
 import game.tools.Constants;
 import game.tools.Tools;
+import sun.misc.GC;
 
 import javax.imageio.ImageIO;
 
 public class LevelPanel extends Panel implements MouseMotionListener, MouseListener, Runnable {
 
-    private final int FOOTER = 50;
+    private final int FOOTER = 60;
     private final int OFFSET = 200;
     private final int PLATEFORM_WIDTH = 150;
-    private final int PLATEFORM_HEIGHT = 200;
+    private final int PLATEFORM_HEIGHT = 180;
 
     private final int SLINGSHOT_WIDTH = 10;
     private final int SLINGSHOT_HEIGHT = 75;
@@ -38,6 +40,10 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
     private ArrayList<Decor> decors;
     private ArrayList<Bird> birds;
     private ArrayList<Pig> pigs;
+
+    private ArrayList<GDecor> gDecors;
+    private ArrayList<GCharacter> gBirds;
+    private ArrayList<GCharacter> gPigs;
 
     BufferedImage backG;
     {
@@ -60,6 +66,10 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         decors = new ArrayList();
         birds = new ArrayList();
         pigs = new ArrayList();
+
+        gDecors= new ArrayList();
+        gBirds = new ArrayList();
+        gPigs = new ArrayList();
 
         init();
         currentBird = getFirstBird();
@@ -95,14 +105,40 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
                     b.setPosY(PLATEFORM_HEIGHT);
                 }
                 birds.add(b);
+                gBirds.add(new GCharacter(b));
             } else if (o instanceof Pig) {
                 Pig p = (Pig) o;
                 pigs.add(p);
+                gPigs.add(new GCharacter(p));
             } else if (o instanceof Decor) {
                 Decor d = (Decor) o;
                 decors.add(d);
+                gDecors.add(new GDecor(d));
             }
         }
+        //STRUCTURE
+        Decor d = (Decor) Loader.getInstance().getDecors().get("Structure").clone();
+        d.setPosY(0);
+        d.setPosX(-OFFSET);
+        d.setWidth(PLATEFORM_WIDTH);
+        d.setLength(PLATEFORM_HEIGHT);
+        gDecors.add(new GDecor(d));
+
+        //GROUND
+        Decor g = (Decor) Loader.getInstance().getDecors().get("Ground").clone();
+        g.setPosY(-FOOTER);
+        g.setPosX(-OFFSET);
+        g.setWidth(Frame.getInstance().getWidth());
+        g.setLength(FOOTER-30);
+        gDecors.add(new GDecor(g));
+
+        //GRASS
+        Decor gr = (Decor) Loader.getInstance().getDecors().get("Structure").clone();
+        gr.setPosY(-FOOTER+30);
+        gr.setPosX(-OFFSET);
+        gr.setWidth(Frame.getInstance().getWidth());
+        gr.setLength(30);
+        gDecors.add(new GDecor(gr));
     }
 
     public void paintComponent(Graphics g2) {
@@ -113,14 +149,6 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
 
         g.translate(0, getHeight() - 1);
         g.scale(1, -1);
-
-        // GROUND
-        g.setColor(Color.BLACK);
-        g.drawLine(0, FOOTER, getWidth(), FOOTER);
-
-        // PLATEFORME
-        g.setColor(Color.BLACK);
-        g.fillRect(0, FOOTER, PLATEFORM_WIDTH, PLATEFORM_HEIGHT);
 
         // SLINGSHOT
         g.setColor(new Color(102, 51, 0));
@@ -143,18 +171,16 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         g.setStroke(s);
 
 
-        for (Bird b: birds) {
-            GCharacter bird = new GCharacter(b, g);
-            bird.draw(0, FOOTER);
+        for (GDecor d : gDecors) {
+            d.draw(OFFSET, FOOTER, g);
         }
-        for (Pig p : pigs) {
-            GCharacter pig = new GCharacter(p, g);
-            pig.draw(OFFSET, FOOTER);
+        for (GCharacter b: gBirds) {
+            b.draw(0, FOOTER, g);
         }
-        for (Decor d :decors) {
-            GDecor decor = new GDecor(d, g);
-            decor.draw(OFFSET, FOOTER);
+        for (GCharacter p : gPigs) {
+            p.draw(OFFSET, FOOTER, g);
         }
+
     }
 
     public void mouseDragged(MouseEvent mouseEvent) {

@@ -10,13 +10,11 @@ import java.io.File;
 
 public class GDecor implements GGameObject {
     private GameObject go;
-    private Graphics2D g;
 
     BufferedImage sprite;
 
-    public GDecor(GameObject go, Graphics2D g) {
+    public GDecor(GameObject go) {
         this.go = go;
-        this.g = g;
         try {
             sprite = ImageIO.read(new File(go.getFullSprite()));
             sprite = Tools.resize(sprite, 30, 30);
@@ -27,11 +25,7 @@ public class GDecor implements GGameObject {
         return go;
     }
 
-    public Graphics2D getG() {
-        return g;
-    }
-
-    public void draw(int OFFSET, int FOOTER) {
+    public void draw(int OFFSET, int FOOTER, Graphics2D g) {
         int iw = sprite.getWidth();
         int ih = sprite.getHeight();
         if (iw > 0 && ih > 0) {
