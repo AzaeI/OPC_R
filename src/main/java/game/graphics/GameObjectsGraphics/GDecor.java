@@ -19,7 +19,7 @@ public class GDecor implements GGameObject {
         this.g = g;
         try {
             sprite = ImageIO.read(new File(go.getFullSprite()));
-            sprite = Tools.resize(sprite, go.getWidth(), go.getLength());
+            sprite = Tools.resize(sprite, 30, 30);
         }catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -32,7 +32,14 @@ public class GDecor implements GGameObject {
     }
 
     public void draw(int OFFSET, int FOOTER) {
-        g.setColor(go.getColor());
-        g.drawImage(sprite, go.getPosX() + OFFSET, go.getPosY()+FOOTER, null);
+        int iw = sprite.getWidth();
+        int ih = sprite.getHeight();
+        if (iw > 0 && ih > 0) {
+            for (int x = go.getPosX() + OFFSET; x < go.getWidth() + go.getPosX() + OFFSET; x += iw) {
+                for (int y = go.getPosY() + FOOTER; y < go.getLength()+go.getPosY() + FOOTER; y += ih) {
+                    g.drawImage(sprite, x, y, iw, ih, null);
+                }
+            }
+        }
     }
 }

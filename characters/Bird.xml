@@ -3,8 +3,8 @@
 		<type>ClassicBird</type>
 		<color>RED</color>
 		<name>Red_Bird</name>
-		<width>30</width>
-		<length>30</length>
+		<width>45</width>
+		<length>45</length>
 		<masse>1</masse>
 		<speed>1</speed>
 		<hp>5</hp>
@@ -14,8 +14,8 @@
 		<type>BlueBird</type>
 		<color>BLUE</color>
 		<name>Blue_Bird</name>
-		<width>30</width>
-		<length>30</length>
+		<width>45</width>
+		<length>45</length>
 		<masse>1</masse>
 		<speed>2</speed>
 		<hp>6</hp>
