@@ -8,6 +8,14 @@
         <color>BLACK</color>
     </decor>
     <decor>
+        <type>Wall</type>
+        <hp>5</hp>
+        <sprite>wall1.png</sprite>
+        <isMovable>true</isMovable>
+        <masse>100</masse>
+        <color>BLACK</color>
+    </decor>
+    <decor>
         <type>Ground</type>
         <hp>9999999</hp>
         <sprite>ground1.jpg</sprite>

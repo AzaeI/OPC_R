@@ -1,0 +1,23 @@
+<level>
+	<name>Level 1</name>
+	<version>1.0</version>
+	<gravity>0.1</gravity>
+	
+	<objects>
+		<object>
+			<type>Bird</type>
+			<class>ClassicBird</class>
+			<order>1</order>
+		</object>
+
+		<object>
+			<type>Decor</type>
+			<class>Structure</class>
+			<width>30</width>
+			<length>210</length>
+
+			<posX>180</posX>
+			<posY>0</posY>
+		</object>
+	</objects>
+</level>

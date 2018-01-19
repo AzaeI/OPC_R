@@ -26,7 +26,7 @@
 		
 		<object>
 			<type>Decor</type>
-			<class>Structure</class>
+			<class>Wall</class>
 
 			<width>30</width>
 			<length>180</length>
@@ -37,12 +37,23 @@
 		
 		<object>
 			<type>Decor</type>
-			<class>Structure</class>
+			<class>Wall</class>
 
 			<width>30</width>
 			<length>60</length>
 
 			<posX>180</posX>
+			<posY>0</posY>
+		</object>
+
+		<object>
+			<type>Decor</type>
+			<class>Structure</class>
+
+			<width>30</width>
+			<length>60</length>
+
+			<posX>90</posX>
 			<posY>0</posY>
 		</object>
 	</objects>

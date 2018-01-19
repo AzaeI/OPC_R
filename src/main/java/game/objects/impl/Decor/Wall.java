@@ -1,11 +1,13 @@
 package game.objects.impl.Decor;
 
 import game.objects.Decor;
+import game.objects.GameObject;
 
-public class Grass extends Decor {
+public class Wall extends Decor {
+
     @Override
     public Decor clone() {
-        Grass d = new Grass();
+        Wall d = new Wall();
         d.setColor(this.getColor());
         d.setWidth(this.getWidth());
         d.setLength(this.getLength());
@@ -17,4 +19,3 @@ public class Grass extends Decor {
         return d;
     }
 }
-

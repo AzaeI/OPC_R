@@ -14,6 +14,7 @@ public class HelmetPig extends Pig {
         p.setName(this.getName());
         p.setHp(this.getHp());
         p.setSprite(this.getSprite());
+        p.setVector(this.getVector().clone());
         return p;
     }
 }

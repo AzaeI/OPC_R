@@ -31,5 +31,6 @@ public abstract class Bird extends Character {
 	}
 
 	public void collisionWith(GameObject g) {
+
 	}
 }

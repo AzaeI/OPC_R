@@ -22,5 +22,7 @@ public class Constants {
     public final static String BG_FILE = IMAGE_DIRECTORY+ "/bg.jpg";
 
     public final static boolean DEBUG = false;
+
+    public final static double FORCE_MAX = 2000;
 	
 }

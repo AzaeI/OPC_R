@@ -1,5 +1,6 @@
 package game.objects;
 
+import game.physics.Vector;
 import game.tools.Constants;
 
 import java.awt.Color;
@@ -16,8 +17,7 @@ public abstract class GameObject {
 	
 	private double masse;
 
-	private double velocityX;
-	private double velocityY;
+	private Vector vector;
 
 	private int hp;
 
@@ -25,9 +25,24 @@ public abstract class GameObject {
 
 	private GameObjectState state;
 
+	//FUNCTION
+
 	public abstract void collisionWith(GameObject g);
 
 	public abstract GameObject clone();
+
+	public void move() {
+		double x = vector.getDirection().x -vector.getCenter().x;
+		double y = vector.getDirection().y -vector.getCenter().y;
+        x = (x / (Constants.FORCE_MAX / vector.getForce()));
+		y = (y / (Constants.FORCE_MAX / vector.getForce()));
+		setPosX((int) (posX + x));
+		setPosY((int) (posY + y));
+		vector.getDirection().x = (int) (vector.getDirection().x + x);
+        vector.getDirection().y = (int) (vector.getDirection().y + y);
+	}
+
+	//GETTER & SETTER
 
 	public Color getColor() {
 		return color;
@@ -43,6 +58,7 @@ public abstract class GameObject {
 
 	public void setPosX(int posX) {
 		this.posX = posX;
+		this.vector.getCenter().x = posX + width/2;
 	}
 
 	public int getPosY() {
@@ -51,6 +67,7 @@ public abstract class GameObject {
 
 	public void setPosY(int posY) {
 		this.posY = posY;
+		this.vector.getDirection().y = posX + length/2;
 	}
 
 	public int getWidth() {
@@ -75,22 +92,6 @@ public abstract class GameObject {
 
 	public void setMasse(double masse) {
 		this.masse = masse;
-	}
-
-	public double getVelocityX() {
-		return velocityX;
-	}
-
-	public void setVelocityX(double velocityX) {
-		this.velocityX = velocityX;
-	}
-
-	public double getVelocityY() {
-		return velocityY;
-	}
-
-	public void setVelocityY(double velocityY) {
-		this.velocityY = velocityY;
 	}
 
 	public int getHp() {
@@ -122,5 +123,13 @@ public abstract class GameObject {
 
 	public void setState(GameObjectState state) {
 		this.state = state;
+	}
+
+	public Vector getVector() {
+		return vector;
+	}
+
+	public void setVector(Vector vector) {
+		this.vector = vector;
 	}
 }

@@ -16,6 +16,7 @@ public class ClassicBird extends Bird {
 		b.setSpeed(this.getSpeed());
 		b.setHp(this.getHp());
 		b.setSprite(this.getSprite());
+		b.setVector(this.getVector().clone());
 		return b;
 	}
 

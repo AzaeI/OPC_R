@@ -13,6 +13,7 @@ public class Ground extends Decor {
         d.setMovable(this.isMovable());
         d.setHp(this.getHp());
         d.setSprite(this.getSprite());
+        d.setVector(this.getVector().clone());
         return d;
     }
 }

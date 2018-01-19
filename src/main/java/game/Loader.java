@@ -14,6 +14,7 @@ import game.objects.impl.Decor.Grass;
 import game.objects.impl.Decor.Ground;
 import game.objects.impl.Decor.Structure;
 import game.objects.impl.Pig.HelmetPig;
+import game.physics.Vector;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -113,6 +114,8 @@ public class Loader {
 				b.setHp(Integer.parseInt(eElement.getElementsByTagName("hp").item(0).getTextContent()));
 
 				b.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
+
+				b.setVector(new Vector());
 				return b;
 			case "BlueBird":
 				b = new BlueBird();
@@ -128,6 +131,8 @@ public class Loader {
 				b.setHp(Integer.parseInt(eElement.getElementsByTagName("hp").item(0).getTextContent()));
 
 				b.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
+
+				b.setVector(new Vector());
 				return b;
 			default:
 				break;
@@ -185,6 +190,8 @@ public class Loader {
 				p.setHp(Integer.parseInt(eElement.getElementsByTagName("hp").item(0).getTextContent()));
 
 				p.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
+
+				p.setVector(new Vector());
 				return p;
 			case "HelmetPig":
 				p = new HelmetPig();
@@ -199,6 +206,8 @@ public class Loader {
 				p.setHp(Integer.parseInt(eElement.getElementsByTagName("hp").item(0).getTextContent()));
 
 				p.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
+
+				p.setVector(new Vector());
 				return p;
 			default:
 				break;
@@ -253,6 +262,8 @@ public class Loader {
 					d.setHp(Integer.parseInt(eElement.getElementsByTagName("hp").item(0).getTextContent()));
 
 					d.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
+
+					d.setVector(new Vector());
 					return d;
 				case "Ground":
 					d = new Ground();
@@ -264,6 +275,8 @@ public class Loader {
 					d.setHp(Integer.parseInt(eElement.getElementsByTagName("hp").item(0).getTextContent()));
 
 					d.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
+
+					d.setVector(new Vector());
 					return d;
 				case "Grass":
 					d = new Grass();
@@ -275,6 +288,21 @@ public class Loader {
 					d.setHp(Integer.parseInt(eElement.getElementsByTagName("hp").item(0).getTextContent()));
 
 					d.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
+
+					d.setVector(new Vector());
+					return d;
+				case "Wall":
+					d = new Grass();
+					colorStr = eElement.getElementsByTagName("color").item(0).getTextContent();
+					field = Class.forName("java.awt.Color").getField(colorStr.toLowerCase());
+					d.setColor((Color) field.get(null));
+					d.setMovable(Boolean.parseBoolean(eElement.getElementsByTagName("isMovable").item(0).getTextContent()));
+					d.setMasse(Double.parseDouble(eElement.getElementsByTagName("masse").item(0).getTextContent()));
+					d.setHp(Integer.parseInt(eElement.getElementsByTagName("hp").item(0).getTextContent()));
+
+					d.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
+
+					d.setVector(new Vector());
 					return d;
 				default:
 					break;

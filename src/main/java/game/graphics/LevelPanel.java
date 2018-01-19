@@ -18,6 +18,7 @@ import game.graphics.GameObjectsGraphics.GCharacter;
 import game.graphics.GameObjectsGraphics.GDecor;
 import game.level.Level;
 import game.objects.*;
+import game.physics.Vector;
 import game.tools.Constants;
 import game.tools.Tools;
 import sun.misc.GC;
@@ -111,18 +112,21 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
                     b.setPosX(PLATEFORM_WIDTH - b.getWidth() * b.getOrder());
                     b.setPosY(PLATEFORM_HEIGHT + FOOTER);
                 }
+                b.getVector().init();
                 birds.add(b);
                 gBirds.add(new GCharacter(b));
             } else if (o instanceof Pig) {
                 Pig p = (Pig) o;
                 p.setPosX(p.getPosX()+OFFSET);
                 p.setPosY(p.getPosY()+FOOTER);
+                p.getVector().init();
                 pigs.add(p);
                 gPigs.add(new GCharacter(p));
             } else if (o instanceof Decor) {
                 Decor d = (Decor) o;
                 d.setPosX(d.getPosX()+OFFSET);
                 d.setPosY(d.getPosY()+FOOTER);
+                d.getVector().init();
                 decors.add(d);
                 gDecors.add(new GDecor(d));
             }
@@ -200,22 +204,20 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
     }
 
     public void mouseDragged(MouseEvent mouseEvent) {
-        /*if (Tools.distance(mouseEvent.getX(), getHeight() - mouseEvent.getY(),
-                SLINGSHOT_CENTER.x, SLINGSHOT_CENTER.y) < SLINGSHOT_CENTER.x) {
+        if (Tools.distance(mouseEvent.getX(), getHeight() - mouseEvent.getY(),
+                SLINGSHOT_CENTER.x, SLINGSHOT_CENTER.y) < SLINGSHOT_CENTER.x - SLINGSHOT_HEIGHT) {
             if (Tools.distance(currentBird.getPosX() + currentBird.getWidth() / 2,
                     getHeight() - (currentBird.getPosY() + currentBird.getLength() / 2 ),
                     mouseEvent.getX(),
-                    mouseEvent.getY()) < currentBird.getWidth() * 2) {*/
+                    mouseEvent.getY()) < currentBird.getWidth() * 2) {
                 getFirstBird().setPosX(mouseEvent.getX() - currentBird.getWidth() / 2);
                 getFirstBird().setPosY(getHeight() - mouseEvent.getY() - currentBird.getLength() / 2 );
-       /*     }
+            }
         }
-*/
-
     }
     public void mouseReleased(MouseEvent mouseEvent) {
-        currentBird.setVelocityX( currentBird.getSpeed() * (SLINGSHOT_CENTER.x - currentBird.getPosX() ) /20);
-        currentBird.setVelocityY( currentBird.getSpeed() * (SLINGSHOT_CENTER.y - currentBird.getPosY() ) /20);
+        currentBird.getVector().getDirection().x = SLINGSHOT_CENTER.x;
+        currentBird.getVector().getDirection().y = SLINGSHOT_CENTER.y;
         currentBird.setSelected(true);
         currentBird  = null;
     }
@@ -226,9 +228,13 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         while (true) {
             try { Thread.currentThread().sleep(10); } catch(InterruptedException e) { }
             collisionManager.checkCollision();
+
+            //Timer reload bird
             if (currentBird == null) {
                 timerRelaodBird-=10;
             }
+
+            //Reload new bird
             if (currentBird == null && timerRelaodBird == 0) {
                 timerRelaodBird = 1000;
                 newCurrentBird();
@@ -248,8 +254,8 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
 
             for (Bird b : birds) {
                 if (b.isSelected()){
-                    b.setPosX((int) (b.getPosX()+b.getVelocityX()));
-                    b.setPosY((int) (b.getPosY()+b.getVelocityY()));
+                    b.move();
+                    System.out.println(b.getPosX() + " : " + b.getPosY() + " : " + b.getVector().getForce());
                     level.getGravity().agis_sur_GameObject(b);
                     b.setState(GameObjectState.FLYING);
                 } else {
@@ -258,11 +264,15 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
 
             }
             for (Pig p : pigs) {
+                p.move();
                 level.getGravity().agis_sur_GameObject(p);
                 p.setState(GameObjectState.IDLE);
             }
             for (Decor d : decors) {
-                level.getGravity().agis_sur_GameObject(d);
+                if (d.isMovable()) {
+                    d.move();
+                    level.getGravity().agis_sur_GameObject(d);
+                }
             }
             repaint();
         }

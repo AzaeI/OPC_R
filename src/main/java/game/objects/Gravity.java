@@ -13,11 +13,7 @@ public class Gravity  extends GameObject {
     }
 
     public void agis_sur_GameObject(GameObject g) {
-        if (g instanceof Bird) {
-            g.setVelocityY(g.getVelocityY() - emplitude_gravity);
-        } else {
-
-        }
+        //g.setVelocityY(g.getVelocityY() - emplitude_gravity);
     }
 
     @Override
