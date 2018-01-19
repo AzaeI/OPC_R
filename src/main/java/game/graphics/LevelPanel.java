@@ -144,7 +144,7 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         gDecors.add(new GDecor(g));
 
         //GRASS
-        Decor gr = (Decor) Loader.getInstance().getDecors().get("Structure").clone();
+        Decor gr = (Decor) Loader.getInstance().getDecors().get("Grass").clone();
         gr.setPosY(FOOTER-30);
         gr.setPosX(0);
         gr.setWidth(Frame.getInstance().getWidth());

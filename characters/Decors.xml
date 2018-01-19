@@ -18,7 +18,7 @@
     <decor>
         <type>Grass</type>
         <hp>9999999</hp>
-        <sprite>grass1.jpg</sprite>
+        <sprite>grass.png</sprite>
         <isMovable>false</isMovable>
         <masse>100</masse>
         <color>BLACK</color>
