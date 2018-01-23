@@ -34,12 +34,27 @@ public abstract class GameObject {
 	public void move() {
 		double x = vector.getDirection().x -vector.getCenter().x;
 		double y = vector.getDirection().y -vector.getCenter().y;
-        x = (x / (Constants.FORCE_MAX / vector.getForce()));
+		x = (x / (Constants.FORCE_MAX / vector.getForce()));
 		y = (y / (Constants.FORCE_MAX / vector.getForce()));
 		setPosX((int) (posX + x));
 		setPosY((int) (posY + y));
 		vector.getDirection().x = (int) (vector.getDirection().x + x);
-        vector.getDirection().y = (int) (vector.getDirection().y + y);
+		vector.getDirection().y = (int) (vector.getDirection().y + y);
+	}
+
+	public void stop() {
+		this.vector.stop();
+	}
+
+	public void applyFriction() {
+		this.vector.applyFiction();
+	}
+
+	public void reboundX() {
+		this.vector.reboundX();
+	}
+	public void reboundY() {
+		this.vector.reboundY();
 	}
 
 	//GETTER & SETTER
@@ -67,7 +82,7 @@ public abstract class GameObject {
 
 	public void setPosY(int posY) {
 		this.posY = posY;
-		this.vector.getDirection().y = posX + length/2;
+		this.vector.getCenter().y = posY + length/2;
 	}
 
 	public int getWidth() {
@@ -132,4 +147,6 @@ public abstract class GameObject {
 	public void setVector(Vector vector) {
 		this.vector = vector;
 	}
+
+
 }

@@ -24,5 +24,7 @@ public class Constants {
     public final static boolean DEBUG = false;
 
     public final static double FORCE_MAX = 2000;
+	public final static double FORCE_MIN = 80;
+	//public final static double FRICTION_POURCENTAGE = 0.000000000000001;
 	
 }

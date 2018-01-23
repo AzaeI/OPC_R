@@ -14,6 +14,7 @@ public class BlueBird extends Bird {
         b.setName(this.getName());
         b.setSpeed(this.getSpeed());
         b.setHp(this.getHp());
+        b.setOrder(this.getOrder());
         b.setSprite(this.getSprite());
         b.setVector(this.getVector().clone());
         return b;

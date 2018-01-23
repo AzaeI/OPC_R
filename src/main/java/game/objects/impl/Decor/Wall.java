@@ -16,6 +16,8 @@ public class Wall extends Decor {
         d.setHp(this.getHp());
         d.setSprite(this.getSprite());
         d.setVector(this.getVector().clone());
+        d.setPosX(this.getPosX());
+        d.setPosY(this.getPosY());
         return d;
     }
 }

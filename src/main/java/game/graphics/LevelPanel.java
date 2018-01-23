@@ -1,12 +1,7 @@
 package game.graphics;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -18,10 +13,9 @@ import game.graphics.GameObjectsGraphics.GCharacter;
 import game.graphics.GameObjectsGraphics.GDecor;
 import game.level.Level;
 import game.objects.*;
-import game.physics.Vector;
 import game.tools.Constants;
 import game.tools.Tools;
-import sun.misc.GC;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import javax.imageio.ImageIO;
 
@@ -33,7 +27,7 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
     private final int PLATEFORM_HEIGHT = 180;
 
     private final int SLINGSHOT_WIDTH = 10;
-    private final int SLINGSHOT_HEIGHT = 75;
+    private final int SLINGSHOT_HEIGHT = 120;
 
     private final int SLINGSHOT_OFFSET = 50;
 
@@ -70,6 +64,7 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
     public LevelPanel(Level level) {
         super();
         this.level = level;
+        this.setLayout(null);
 
         decors = new ArrayList();
         birds = new ArrayList();
@@ -81,7 +76,6 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
 
         init();
         currentBird = getFirstBird();
-
         currentBird.setPosX(SLINGSHOT_CENTER.x - ((currentBird.getWidth()) / 2));
         currentBird.setPosY(SLINGSHOT_CENTER.y - ((currentBird.getLength()) / 2));
 
@@ -204,25 +198,31 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
     }
 
     public void mouseDragged(MouseEvent mouseEvent) {
-        if (Tools.distance(mouseEvent.getX(), getHeight() - mouseEvent.getY(),
-                SLINGSHOT_CENTER.x, SLINGSHOT_CENTER.y) < SLINGSHOT_CENTER.x - SLINGSHOT_HEIGHT) {
-            if (Tools.distance(currentBird.getPosX() + currentBird.getWidth() / 2,
-                    getHeight() - (currentBird.getPosY() + currentBird.getLength() / 2 ),
-                    mouseEvent.getX(),
-                    mouseEvent.getY()) < currentBird.getWidth() * 2) {
+        Point tmp_MouseP = new Point(mouseEvent.getX(), getHeight() - mouseEvent.getY());
+        int max = SLINGSHOT_HEIGHT;
+
+        if (tmp_MouseP.distance(SLINGSHOT_CENTER) < max ) {
                 getFirstBird().setPosX(mouseEvent.getX() - currentBird.getWidth() / 2);
                 getFirstBird().setPosY(getHeight() - mouseEvent.getY() - currentBird.getLength() / 2 );
-            }
+        } else {
+            Point tmp = Tools.interpolationByDistance(SLINGSHOT_CENTER, tmp_MouseP, max);
+
+            getFirstBird().setPosX(tmp.x - currentBird.getWidth() / 2);
+            getFirstBird().setPosY(tmp.y - currentBird.getLength() / 2 );
         }
     }
     public void mouseReleased(MouseEvent mouseEvent) {
-        currentBird.getVector().getDirection().x = SLINGSHOT_CENTER.x;
-        currentBird.getVector().getDirection().y = SLINGSHOT_CENTER.y;
+        double distance = SLINGSHOT_CENTER.distance(currentBird.getVector().getCenter());
+        if (!( distance < Constants.FORCE_MIN)) {
+            currentBird.getVector().setDirection((Point) SLINGSHOT_CENTER.clone());
+        } else {
+            Point tmp = Tools.interpolationByDistance(currentBird.getVector().getCenter(), SLINGSHOT_CENTER, Constants.FORCE_MIN);
+            currentBird.getVector().setDirection(tmp);
+            System.out.println(currentBird.getVector().getForce());
+        }
         currentBird.setSelected(true);
-        currentBird  = null;
+        currentBird = null;
     }
-
-
 
     public void run() {
         while (true) {
@@ -255,7 +255,7 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
             for (Bird b : birds) {
                 if (b.isSelected()){
                     b.move();
-                    System.out.println(b.getPosX() + " : " + b.getPosY() + " : " + b.getVector().getForce());
+                    b.applyFriction();
                     level.getGravity().agis_sur_GameObject(b);
                     b.setState(GameObjectState.FLYING);
                 } else {
@@ -286,5 +286,8 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
     public void mouseExited(MouseEvent mouseEvent) {}
     public void mousePressed(MouseEvent mouseEvent) {}
     public void mouseMoved(MouseEvent mouseEvent) {}
-    public void mouseClicked(MouseEvent mouseEvent) {}
+    public void mouseClicked(MouseEvent mouseEvent) {
+        if (mouseEvent.getX() < 50 && mouseEvent.getY() < 20)
+            Frame.getInstance().setPanel(new LevelSelectorPanel());
+    }
 }

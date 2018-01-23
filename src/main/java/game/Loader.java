@@ -52,7 +52,11 @@ public class Loader {
 	}
 	
 	public ArrayList<Level> getLevels() {
-		return levels;
+		ArrayList<Level> lv = new ArrayList();
+		for (Level l : levels) {
+			lv.add(l.clone());
+		}
+		return lv;
 	}
 
 	public HashMap<String, Bird> getBirds() {

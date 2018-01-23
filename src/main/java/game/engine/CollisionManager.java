@@ -5,6 +5,7 @@ import game.objects.Decor;
 import game.objects.GameObject;
 import game.tools.Tools;
 
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.List;
@@ -28,10 +29,9 @@ public class CollisionManager {
             if (g != go) {
                 //CHECK CHAR TO CHAR
                 if (g instanceof Character && go instanceof Character) {
-                    double distance = Tools.distance(g.getPosX() + g.getWidth() / 2,
-                            g.getPosY() + g.getWidth()/2,
-                            go.getPosX() + go.getWidth()/2,
-                            go.getPosY() + go.getWidth()/2);
+                    Point p1 = new Point(g.getPosX() + g.getWidth() / 2, g.getPosY() + g.getWidth()/2);
+                    Point p2 = new Point(go.getPosX() + go.getWidth()/2,go.getPosY() + go.getWidth()/2);
+                    double distance = p1.distance(p2);
 
                     if (g != go && distance < g.getWidth() / 2 + go.getWidth() / 2) {
                         g.collisionWith(go);

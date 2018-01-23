@@ -1,5 +1,6 @@
 package game.physics;
 
+import game.tools.Constants;
 import game.tools.Tools;
 
 import java.awt.*;
@@ -46,11 +47,37 @@ public class Vector {
     }
 
     public double getForce() {
-        return Tools.distance(center.x, center.y, direction.x, direction.y);
+        return center.distance(direction);
     }
 
     public Vector clone() {
         Vector v = new Vector(center.x, center.y, direction.x, direction.y);
         return v;
+    }
+    
+    
+
+    public void applyFiction() {
+        //TODO
+        /*double tmpX = (direction.x - center.x) * Constants.FRICTION_POURCENTAGE;
+        double tmpY = (direction.y - center.y) * Constants.FRICTION_POURCENTAGE;
+        this.direction.x -= tmpX ;
+        this.direction.y -= tmpY;
+        System.out.println(tmpX + " : " + tmpY);*/
+    }
+
+    public void stop() {
+        this.direction.x = center.x;
+        this.direction.y = center.y;
+    }
+
+    public void reboundX() {
+        int tmp = this.direction.x - this.center.x;
+        this.direction.x = this.center.x - tmp;
+    }
+
+    public void reboundY() {
+        int tmp = this.direction.y - this.center.y;
+        this.direction.y = this.center.y - tmp;
     }
 }

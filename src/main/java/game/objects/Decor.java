@@ -2,6 +2,7 @@ package game.objects;
 
 import game.objects.impl.Decor.Grass;
 
+
 public abstract class Decor extends GameObject {
 
 	private boolean isMovable;
@@ -15,21 +16,22 @@ public abstract class Decor extends GameObject {
 	}
 
 	public void collisionWith(GameObject g) {
-		/*if (g instanceof Grass) {
-			g.setVelocityY(0);
+		//THIS IS NOT MOVABLE
+		if (!this.isMovable) {
+			if (g instanceof Decor) {
+				g.stop();
+			}
+			else if (g instanceof Character) {
+				if (g.getVector().getCenter().x + g.getWidth()/2 > this.getPosX())
+					g.reboundY();
+				else
+					g.reboundX();
+			}
 		}
-		else if (!this.isMovable) {
-			g.setVelocityX(0);
-			g.setVelocityY(0);
+		// THIS IS MOVABLE
+		else {
+
 		}
-
-		if (g instanceof Decor && this.isMovable) {
-			g.setVelocityX(this.getVelocityX());
-			g.setVelocityY(this.getVelocityY());
-		} else if (g instanceof Bird) {
-
-		}*/
-
-	}
+ 	}
 
 }

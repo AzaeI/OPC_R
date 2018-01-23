@@ -16,6 +16,8 @@ public class ClassicPig extends Pig {
 		p.setHp(this.getHp());
 		p.setSprite(this.getSprite());
 		p.setVector(this.getVector().clone());
+		p.setPosX(this.getPosX());
+		p.setPosY(this.getPosY());
 		return p;
 	}
 

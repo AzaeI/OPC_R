@@ -1,5 +1,9 @@
 package game.objects;
 
+import game.tools.Tools;
+
+import java.awt.*;
+
 public class Gravity  extends GameObject {
 
     private double emplitude_gravity;
@@ -13,7 +17,11 @@ public class Gravity  extends GameObject {
     }
 
     public void agis_sur_GameObject(GameObject g) {
-        //g.setVelocityY(g.getVelocityY() - emplitude_gravity);
+        double force = g.getVector().getForce();
+        Point tmp = new Point(g.getVector().getDirection().x, (int) (g.getVector().getDirection().y - emplitude_gravity));
+
+        g.getVector().getCenter().y -= emplitude_gravity;
+        g.getVector().getDirection().y -= emplitude_gravity;
     }
 
     @Override
