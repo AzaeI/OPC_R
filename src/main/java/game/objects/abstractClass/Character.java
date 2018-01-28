@@ -1,6 +1,8 @@
-package game.objects;
+package game.objects.abstractClass;
 
-public abstract class Character extends GameObject  {
+import game.objects.GameObject;
+
+public abstract class Character extends GameObject {
 
 	private String name;
 

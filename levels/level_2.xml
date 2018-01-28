@@ -13,12 +13,12 @@
 
 		<object>
 			<type>Decor</type>
-			<class>Structure</class>
-			<width>30</width>
-			<length>180</length>
+			<class>Wall</class>
+			<width>600</width>
+			<length>30</length>
 
-			<posX>400</posX>
-			<posY>210</posY>
+			<posX>60</posX>
+			<posY>400</posY>
 		</object>
 
 	</objects>

@@ -1,0 +1,13 @@
+<gravities>
+    <gravity>
+        <type>Square</type>
+        <force>1</force>
+        <isVisible>false</isVisible>
+    </gravity>
+    <gravity>
+        <type>Round</type>
+        <force>2</force>
+        <sprite>blackhole.png</sprite>
+        <isVisible>true</isVisible>
+    </gravity>
+</gravities>

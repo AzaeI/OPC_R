@@ -54,6 +54,11 @@ public class Vector {
         Vector v = new Vector(center.x, center.y, direction.x, direction.y);
         return v;
     }
+
+    public void addVector(Vector v) {
+        this.direction.x += v.getDirection().x - v.getCenter().x;
+        this.direction.y += v.getDirection().y - v.getCenter().y;
+    }
     
     
 

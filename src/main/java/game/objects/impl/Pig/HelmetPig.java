@@ -1,7 +1,7 @@
 package game.objects.impl.Pig;
 
 import game.objects.GameObject;
-import game.objects.Pig;
+import game.objects.abstractClass.Pig;
 
 public class HelmetPig extends Pig {
     @Override

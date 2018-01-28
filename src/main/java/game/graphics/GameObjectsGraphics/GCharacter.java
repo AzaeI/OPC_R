@@ -1,8 +1,7 @@
 package game.graphics.GameObjectsGraphics;
 
-import game.objects.Character;
+import game.objects.abstractClass.Character;
 import game.objects.GameObject;
-import game.objects.GameObjectState;
 import game.tools.Constants;
 import game.tools.Tools;
 
@@ -13,13 +12,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class GCharacter implements GGameObject {
-    private GameObject go;
+    private Character go;
 
     BufferedImage sprite_1;
     BufferedImage sprite_2;
     BufferedImage sprite_3;
 
-    public GCharacter(GameObject go) {
+    public GCharacter(Character go) {
         this.go = go;
 
         try {
@@ -34,13 +33,13 @@ public class GCharacter implements GGameObject {
 
     }
 
-    public GameObject getGo() {
+    public Character getGo() {
         return go;
     }
 
     public void draw(Graphics2D g) {
         g.setColor(go.getColor());
-        Character c = (Character) go;
+        Character c = go;
         switch (c.getState()) {
         case IDLE:
             g.drawImage(sprite_1, go.getPosX(), go.getPosY(),null);
@@ -57,6 +56,9 @@ public class GCharacter implements GGameObject {
                     go.getLength(), go.getWidth(),
                     go.getLength(), go.getWidth());
             g.draw(r2);
+
+            g.setColor(Color.GREEN);
+            g.drawLine(go.getVector().getCenter().x,go.getVector().getCenter().y, go.getVector().getDirection().x,  go.getVector().getDirection().y);
         }
     }
 }

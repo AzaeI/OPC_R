@@ -1,9 +1,13 @@
 package game.objects;
 
+import game.objects.abstractClass.Bird;
+import game.objects.abstractClass.Decor;
+import game.objects.abstractClass.Gravity;
+import game.objects.abstractClass.Pig;
 import game.physics.Vector;
 import game.tools.Constants;
 
-import java.awt.Color;
+import java.awt.*;
 
 public abstract class GameObject {
 
@@ -25,6 +29,8 @@ public abstract class GameObject {
 
 	private GameObjectState state;
 
+	private Point oldPos;
+
 	//FUNCTION
 
 	public abstract void collisionWith(GameObject g);
@@ -32,10 +38,15 @@ public abstract class GameObject {
 	public abstract GameObject clone();
 
 	public void move() {
-		double x = vector.getDirection().x -vector.getCenter().x;
-		double y = vector.getDirection().y -vector.getCenter().y;
+		double x = vector.getDirection().x - vector.getCenter().x;
+		double y = vector.getDirection().y - vector.getCenter().y;
 		x = (x / (Constants.FORCE_MAX / vector.getForce()));
 		y = (y / (Constants.FORCE_MAX / vector.getForce()));
+
+		if (oldPos == null) oldPos = new Point();
+		oldPos.x = posX;
+		oldPos.y = posY;
+
 		setPosX((int) (posX + x));
 		setPosY((int) (posY + y));
 		vector.getDirection().x = (int) (vector.getDirection().x + x);
@@ -125,6 +136,7 @@ public abstract class GameObject {
 	    if (this instanceof Bird) return Constants.BIRD_IMG + "/" + sprite;
 	    else if (this instanceof Pig) return Constants.PIGS_IMG + "/" + sprite;
 	    else if (this instanceof Decor) return Constants.DECOR_IMG +  "/" + sprite;
+	    else if (this instanceof Gravity) return Constants.GRAVITY_IMG + "/" + sprite;
 	    else return "";
     }
 
@@ -148,5 +160,11 @@ public abstract class GameObject {
 		this.vector = vector;
 	}
 
+	public Point getOldPos() {
+		return oldPos;
+	}
 
+	public void setOldPos(Point oldPos) {
+		this.oldPos = oldPos;
+	}
 }

@@ -1,13 +1,16 @@
 package game.engine;
 
-import game.objects.Character;
-import game.objects.Decor;
+import game.objects.abstractClass.Character;
+import game.objects.abstractClass.Decor;
 import game.objects.GameObject;
-import game.tools.Tools;
+import game.objects.abstractClass.Gravity;
+import game.objects.impl.gravity.RoundGravity;
+import game.objects.impl.gravity.SquareGravity;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
+import java.lang.reflect.GenericArrayType;
 import java.util.List;
 
 public class CollisionManager {
@@ -65,6 +68,30 @@ public class CollisionManager {
                     Rectangle2D r1 = new Rectangle2D.Double(g.getPosX(), g.getPosY(), g.getWidth(), g.getLength());
                     Rectangle2D r2 = new Rectangle2D.Double(go.getPosX(), go.getPosY(), go.getWidth(), go.getLength());
                     if (r1.intersects(r2)) {
+                        g.collisionWith(go);
+                    }
+                }
+                //ROUND GRAVITY TO CHARACTER
+                else if (g instanceof RoundGravity && go instanceof Character) {
+                    Point p1 = g.getVector().getCenter();
+                    Point p2 = go.getVector().getCenter();
+
+                    double distance = p1.distance(p2);
+                    if (g != go && distance < ((RoundGravity) g).getRadius() /2 + go.getWidth()) {
+                        g.collisionWith(go);
+                    }
+                }
+                //SQUARE GRAVITY TO CHAR
+                else if (g instanceof SquareGravity && go instanceof Character) {
+                    Rectangle2D r1 = new Rectangle2D.Double(g.getPosX() - ((SquareGravity) g).getRadius(),
+                            g.getPosY() - ((SquareGravity) g).getRadius(),
+                            g.getWidth() + ((SquareGravity) g).getRadius()*2,
+                            g.getLength() + ((SquareGravity) g).getRadius()*2);
+
+                    RoundRectangle2D r2 = new RoundRectangle2D.Double(go.getPosX(), go.getPosY(),
+                            go.getLength(), go.getWidth(),
+                            go.getLength(), go.getWidth());
+                    if (r2.intersects(r1)){
                         g.collisionWith(go);
                     }
                 }

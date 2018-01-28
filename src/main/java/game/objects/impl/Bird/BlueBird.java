@@ -1,6 +1,6 @@
 package game.objects.impl.Bird;
 
-import game.objects.Bird;
+import game.objects.abstractClass.Bird;
 import game.objects.GameObject;
 
 public class BlueBird extends Bird {

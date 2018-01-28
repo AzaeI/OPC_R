@@ -10,7 +10,7 @@
     <decor>
         <type>Wall</type>
         <hp>5</hp>
-        <sprite>wall1.png</sprite>
+        <sprite>wood.jpg</sprite>
         <isMovable>true</isMovable>
         <masse>100</masse>
         <color>BLACK</color>

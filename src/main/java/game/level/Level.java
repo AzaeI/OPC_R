@@ -4,26 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import game.objects.GameObject;
-import game.objects.Gravity;
+import game.objects.impl.gravity.SquareGravity;
 
 public class Level {
 	private String name;
-	private Gravity gravity;
 	private List<GameObject> objects;
 	
-	public Level(String name, double gravity, List<GameObject> objects) {
+	public Level(String name, List<GameObject> objects) {
 		super();
 		this.name = name;
-		this.gravity = new Gravity(gravity);
 		this.objects = objects;
 	}
 
 	public String getName() {
 		return name;
-	}
-
-	public Gravity getGravity() {
-		return gravity;
 	}
 
 	public List<GameObject> getObjects() {
@@ -35,7 +29,7 @@ public class Level {
 		for (GameObject gameObject : objects) {
 			objs.add(gameObject.clone());
 		}
-		Level l = new Level(this.name, this.gravity.getEmplitude_gravity(), objs);
+		Level l = new Level(this.name, objs);
 		return l;
 	}
 	

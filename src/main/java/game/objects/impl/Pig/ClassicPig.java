@@ -1,7 +1,7 @@
 package game.objects.impl.Pig;
 
-import game.objects.Character;
-import game.objects.Pig;
+import game.objects.abstractClass.Character;
+import game.objects.abstractClass.Pig;
 
 public class ClassicPig extends Pig {
 

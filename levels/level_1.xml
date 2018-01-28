@@ -1,29 +1,57 @@
 <level>
 	<name>Level 1</name>
 	<version>1.0</version>
-	<gravity>0.1</gravity>
-	
+
 	<objects>
+
+        <!--GRAVITY-->
+		<object>
+			<type>Gravity</type>
+			<class>Square</class>
+
+			<posX>0</posX>
+			<posY>30</posY>
+
+            <width>0</width>
+            <length>30</length>
+
+            <radius>0</radius>
+		</object>
+        <!--<object>
+            <type>Gravity</type>
+            <class>Round</class>
+
+            <posX>400</posX>
+            <posY>400</posY>
+
+            <width>30</width>
+            <length>30</length>
+
+            <radius>150</radius>
+        </object>-->
+
+        <!--BIRD-->
 		<object>
 			<type>Bird</type>
 			<class>ClassicBird</class>
-			<order>1</order>
+			<order>2</order>
 		</object>
 		<object>
 			<type>Bird</type>
 			<class>BlueBird</class>
-			<order>2</order>
+			<order>1</order>
 		</object>
 
-
+        <!--PIGS-->
 		<object>
 			<type>Pig</type>
 			<class>HelmetPig</class>
 
-			<posX>240</posX>
-			<posY>0</posY>
+			<posX>440</posX>
+			<posY>60</posY>
 		</object>
-		
+
+        <!--DECOR-->
 		<object>
 			<type>Decor</type>
 			<class>Wall</class>
@@ -31,30 +59,50 @@
 			<width>30</width>
 			<length>180</length>
 			
-			<posX>400</posX>
+			<posX>600</posX>
 			<posY>60</posY>
 		</object>
-		
-		<object>
-			<type>Decor</type>
-			<class>Wall</class>
-
-			<width>30</width>
-			<length>60</length>
-
-			<posX>180</posX>
-			<posY>0</posY>
-		</object>
-
 		<object>
 			<type>Decor</type>
 			<class>Structure</class>
 
 			<width>30</width>
-			<length>60</length>
+			<length>90</length>
 
-			<posX>90</posX>
-			<posY>0</posY>
+			<posX>380</posX>
+			<posY>60</posY>
 		</object>
+		<object>
+			<type>Decor</type>
+			<class>Wall</class>
+
+			<width>30</width>
+			<length>210</length>
+
+			<posX>900</posX>
+			<posY>60</posY>
+		</object>
+
+        <!--BASE-->
+        <object>
+            <type>Decor</type>
+            <class>Ground</class>
+
+            <width>0</width>
+            <length>30</length>
+
+            <posX>0</posX>
+            <posY>0</posY>
+        </object>
+        <object>
+            <type>Decor</type>
+            <class>Grass</class>
+
+            <width>0</width>
+            <length>30</length>
+
+            <posX>0</posX>
+            <posY>30</posY>
+        </object>
 	</objects>
 </level>

@@ -1,6 +1,6 @@
 package game.objects.impl.Decor;
 
-import game.objects.Decor;
+import game.objects.abstractClass.Decor;
 
 public class Grass extends Decor {
     @Override

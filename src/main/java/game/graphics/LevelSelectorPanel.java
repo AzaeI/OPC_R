@@ -11,8 +11,6 @@ import javax.swing.JLabel;
 import game.Loader;
 import game.graphics.Listenner.PlayButtonListener;
 import game.level.Level;
-import game.objects.Bird;
-import game.objects.GameObject;
 
 public class LevelSelectorPanel extends Panel {
 
