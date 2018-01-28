@@ -24,17 +24,14 @@ public abstract class Decor extends GameObject {
             if (!this.isMovable)
                 g.stop();
             else {
-                System.out.println( (g.getOldPos().x + g.getWidth()) + " : " + this.getPosX());
-
                 if (g.getOldPos().x + g.getWidth() > this.getPosX() &&
                         g.getOldPos().x < this.getPosX() + this.getWidth()) {
                     if (this.getVector().getCenter().y > g.getPosY() + g.getLength()) {
-                        System.out.println("TOP");
+
                     } else {
-                        System.out.println("BOTTOMmmmm");
+
                     }
                 } else {
-                    System.out.println("Je te souhaite le bonjour");
                     if (this.getVector().getCenter().x > g.getPosX() + g.getWidth()) {
                         Vector v = new Vector();
                         v.setCenter((Point) g.getVector().getCenter().clone());

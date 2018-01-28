@@ -21,7 +21,9 @@ public class Constants {
     public final static String GRAVITY_FILE = CHARACTERS_DIRECTORY + "/Gravity.xml";
 
 
-    public final static String BG_FILE = IMAGE_DIRECTORY+ "/bg.jpg";
+	public final static String BG_FILE = IMAGE_DIRECTORY+ "/bg.jpg";
+	public final static String TOMB_FILE = IMAGE_DIRECTORY+ "/sprites/tomb.png";
+
 
     public final static boolean DEBUG = true;
 
@@ -29,5 +31,6 @@ public class Constants {
 	public final static double FORCE_MIN = 80;
 	public final static double COLLISION_REDUCTOR = 3;
 	//public final static double FRICTION_POURCENTAGE = 0.000000000000001;
+	public final static double DEACREASE_TIMER_DESAPPEAR_GCHARACTER = 10;
 	
 }

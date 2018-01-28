@@ -1,6 +1,7 @@
 package game.objects.abstractClass;
 
 import game.objects.GameObject;
+import game.objects.GameObjectState;
 import game.physics.Vector;
 import game.tools.Constants;
 
@@ -18,9 +19,9 @@ public abstract class Bird extends Character {
             if (this.getOldPos().x + this.getWidth() > g.getPosX() &&
                     this.getOldPos().x < g.getPosX() + g.getWidth()) {
                 if (this.getVector().getCenter().y > g.getPosY() + g.getLength()) {
-                    System.out.println("TOP");
+
                 } else {
-                    System.out.println("BOTTOM");
+
                 }
             } else {
                 if (this.getVector().getCenter().x > g.getPosX() + g.getWidth()) {
@@ -36,6 +37,31 @@ public abstract class Bird extends Character {
                 }
             }
 
+        } else if (g instanceof Pig) {
+
+            int hp = g.getCurrentHp();
+
+            //REBOND ON PIG
+            if (this.getVector().getForce() < 100) {
+                g.setCurrentHp(hp - 2);
+            } else if (this.getVector().getForce() < 120) {
+                g.setCurrentHp(hp - 3);
+            }
+
+            //TO FAST TO REBOUN, PASS THROUGH PIG
+            else if (this.getVector().getForce() <= 140) {
+                g.setCurrentHp(hp - 4);
+            } else if (this.getVector().getForce() >= 141) {
+                g.setCurrentHp(hp - 5);
+            }
+
+            if (g.getCurrentHp() <= 0) {
+                g.setState(GameObjectState.DEAD);
+            } else if (g.getHp() == g.getHp()) {
+                g.setState(GameObjectState.IDLE);
+            } else {
+                g.setState(GameObjectState.DAMAGED_1);
+            }
         }
     }
 

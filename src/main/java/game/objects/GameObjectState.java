@@ -1,5 +1,5 @@
 package game.objects;
 
 public enum GameObjectState {
-    IDLE, FLYING, DEAD, DAMAGED_1, DAMAGED_2
+    IDLE, FLYING, DEAD, DAMAGED_1, TOMB
 }

@@ -24,6 +24,7 @@ public abstract class GameObject {
 	private Vector vector;
 
 	private int hp;
+	private int currentHp;
 
 	private String sprite;
 
@@ -128,7 +129,15 @@ public abstract class GameObject {
 		this.hp = hp;
 	}
 
-    public String getSprite() {
+	public int getCurrentHp() {
+		return currentHp;
+	}
+
+	public void setCurrentHp(int currentHp) {
+		this.currentHp = currentHp;
+	}
+
+	public String getSprite() {
         return sprite;
     }
 

@@ -52,6 +52,16 @@
 		</object>
 
         <!--DECOR-->
+<!--		<object>
+			<type>Decor</type>
+			<class>Structure</class>
+
+			<width>30</width>
+			<length>90</length>
+
+			<posX>380</posX>
+			<posY>60</posY>
+		</object>-->
 		<object>
 			<type>Decor</type>
 			<class>Wall</class>
@@ -60,16 +70,6 @@
 			<length>180</length>
 			
 			<posX>600</posX>
-			<posY>60</posY>
-		</object>
-		<object>
-			<type>Decor</type>
-			<class>Structure</class>
-
-			<width>30</width>
-			<length>90</length>
-
-			<posX>380</posX>
 			<posY>60</posY>
 		</object>
 		<object>

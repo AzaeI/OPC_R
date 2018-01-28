@@ -47,6 +47,10 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
     private ArrayList<GCharacter> gPigs;
     private ArrayList<GGravity> gGravities;
 
+    private ArrayList<Pig> pigToRemove;
+    private ArrayList<GCharacter> gPigToRemove;
+
+
     private BufferedImage backG;
     {
         try {
@@ -56,7 +60,8 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         }
     }
 
-    private int timerRelaodBird = 1000; //1sec
+    private int timerRelaodBird   = 1000;     //1sec
+    private final int timerDiePig       = 1000;     //1sec
 
     private CollisionManager collisionManager;
 
@@ -104,6 +109,7 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
     }
 
     private void init() {
+        gPigToRemove = new ArrayList<>();
         for (GameObject o : level.getObjects()) {
             if (o instanceof Bird) {
                 Bird b = (Bird) o;
@@ -112,13 +118,17 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
                     b.setPosY(PLATEFORM_HEIGHT + PLATEFORM_POSY);
                 }
                 b.getVector().init();
+                b.setState(GameObjectState.IDLE);
+                b.setCurrentHp(b.getHp());
                 birds.add(b);
-                gBirds.add(new GCharacter(b));
+                gBirds.add(new GCharacter(b, timerDiePig));
             } else if (o instanceof Pig) {
                 Pig p = (Pig) o;
                 p.getVector().init();
+                p.setState(GameObjectState.IDLE);
+                p.setCurrentHp(p.getHp());
                 pigs.add(p);
-                gPigs.add(new GCharacter(p));
+                gPigs.add(new GCharacter(p, timerDiePig));
             } else if (o instanceof Decor) {
                 Decor d = (Decor) o;
                 d.getVector().init();
@@ -181,6 +191,9 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
             b.draw(g);
         }
         for (GCharacter p : gPigs) {
+            if (p.getTimeToDisappear() <= 0) {
+                p.getGo().setState(GameObjectState.TOMB);
+            }
             p.draw(g);
         }
         for (GGravity gr : gGravities) {
@@ -222,7 +235,7 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         while (true) {
             try { Thread.currentThread().sleep(10); } catch(InterruptedException e) { }
             collisionManager.checkCollision();
-
+            pigToRemove = new ArrayList();
             //Timer reload bird
             if (currentBird == null) {
                 timerRelaodBird-=10;
@@ -245,21 +258,41 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
                     }
                 }
             }
-
-            for (Bird b : birds) {
-                if (b.isSelected()){
-                    b.move();
-                    b.applyFriction();
-                    b.setState(GameObjectState.FLYING);
-                } else {
-                    b.setState(GameObjectState.IDLE);
+            if (birds.size() != 0) {
+                for (Bird b : birds) {
+                    if (b.isSelected()){
+                        b.move();
+                        b.applyFriction();
+                        b.setState(GameObjectState.FLYING);
+                    }
                 }
+            }
 
+            if (pigs.size() != 0) {
+                for (Pig p : pigs) {
+                    if (p.getState() == GameObjectState.DEAD) {
+                        pigToRemove.add(p);
+                        GCharacter c = gPigs.stream().filter(gp -> gp.getGo().equals(p)).findFirst().get();
+                        c.setTimeToDisappear(timerDiePig);
+                        gPigToRemove.add(c);
+                    } else {
+                        p.move();
+                    }
+                }
             }
-            for (Pig p : pigs) {
-                p.move();
-                p.setState(GameObjectState.IDLE);
+
+            if (pigToRemove.size() > 0) {
+                for (Pig p : pigToRemove) {
+                    pigs.remove(p);
+                }
             }
+
+            if (gPigToRemove.size() > 0) {
+                for (GCharacter gc : gPigToRemove) {
+                    gc.decreaseTimerDisappear();
+                }
+            }
+
             for (Decor d : decors) {
                 if (d.isMovable()) {
                     d.move();
