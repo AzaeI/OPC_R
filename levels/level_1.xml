@@ -50,6 +50,13 @@
 			<posX>440</posX>
 			<posY>60</posY>
 		</object>
+		<object>
+			<type>Pig</type>
+			<class>HelmetPig</class>
+
+			<posX>380</posX>
+			<posY>60</posY>
+		</object>
 
         <!--DECOR-->
 <!--		<object>

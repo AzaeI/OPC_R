@@ -50,7 +50,6 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
     private ArrayList<Pig> pigToRemove;
     private ArrayList<GCharacter> gPigToRemove;
 
-
     private BufferedImage backG;
     {
         try {
@@ -63,6 +62,8 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
     private int timerRelaodBird   = 1000;     //1sec
     private final int timerDiePig       = 1000;     //1sec
 
+    private volatile boolean shutdown;
+
     private CollisionManager collisionManager;
 
     private Bird currentBird;
@@ -72,6 +73,8 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         super();
         this.level = level;
         this.setLayout(null);
+
+        shutdown = false;
 
         decors = new ArrayList();
         birds = new ArrayList();
@@ -232,9 +235,14 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
     }
 
     public void run() {
-        while (true) {
+        while (!shutdown) {
             try { Thread.currentThread().sleep(10); } catch(InterruptedException e) { }
             collisionManager.checkCollision();
+            if (checkWinCondition()) {
+                closeGame();
+            }
+
+
             pigToRemove = new ArrayList();
             //Timer reload bird
             if (currentBird == null) {
@@ -302,8 +310,16 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         }
     }
 
-    public boolean winCondition(){
-        return false;
+    private boolean checkWinCondition(){
+        for (GCharacter gc : gPigs) {
+            if (gc.getGo().getState() != GameObjectState.TOMB) return false;
+        }
+        return true;
+    }
+
+    private void closeGame() {
+        Frame.getInstance().setPanel(new LevelSelectorPanel());
+        this.shutdown = true;
     }
 
     public void mouseEntered(MouseEvent mouseEvent) {}
@@ -311,7 +327,8 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
     public void mousePressed(MouseEvent mouseEvent) {}
     public void mouseMoved(MouseEvent mouseEvent) {}
     public void mouseClicked(MouseEvent mouseEvent) {
-        if (mouseEvent.getX() < 50 && mouseEvent.getY() < 20)
-            Frame.getInstance().setPanel(new LevelSelectorPanel());
+        if (mouseEvent.getX() < 50 && mouseEvent.getY() < 20) {
+            closeGame();
+        }
     }
 }
