@@ -24,7 +24,7 @@ public class Constants {
 	public final static String BG_FILE = IMAGE_DIRECTORY+ "/bg.jpg";
 	public final static String TOMB_FILE = IMAGE_DIRECTORY+ "/sprites/tomb.png";
 	public final static String TOMB_BIRD_FILE = IMAGE_DIRECTORY+ "/sprites/tomb_bird.png";
-
+	public final static String HOME = IMAGE_DIRECTORY+ "/sprites/home.png";
 
 	public final static boolean DEBUG = false;
 

@@ -84,4 +84,9 @@ public class Vector {
     public void applyFriction() {
         direction = Tools.interpolationByDistance(center, direction, getForce() * (1 - Constants.FRICTION_POURCENTAGE));
     }
+
+    public boolean isImmobile() {
+        if (getForce() == 0) return true;
+        return false;
+    }
 }

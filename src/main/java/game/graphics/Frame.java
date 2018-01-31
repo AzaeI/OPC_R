@@ -4,6 +4,7 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import game.level.Level;
 import game.tools.Constants;
 
 public class Frame extends JFrame{
@@ -34,8 +35,17 @@ public class Frame extends JFrame{
 	public Dimension getPreferredSize() {
 		return new Dimension(1000,800);
 	}
-	public void setPanel(Panel panel) {
+	private void setPanel(Panel panel) {
 		setContentPane(panel);
 		panel.revalidate();
 	}
+
+	public void setSelectorLvPannel () {
+		mainFrame.setPanel(new LevelSelectorPanel());
+	}
+
+	public void setLevelPannel (Level l) {
+		mainFrame.setPanel(new LevelPanel(l));
+	}
+
 }

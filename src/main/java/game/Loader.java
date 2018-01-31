@@ -216,7 +216,7 @@ public class Loader {
 
     // DECOR
     private HashMap<String, Decor> loadDecors() {
-        HashMap<String, Decor> ld = new HashMap<>();
+        HashMap<String, Decor> ld = new HashMap();
 
         File f = new File(Constants.DECOR_FILE);
         try {
