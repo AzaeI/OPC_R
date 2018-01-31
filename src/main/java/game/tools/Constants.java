@@ -30,7 +30,7 @@ public class Constants {
     public final static double FORCE_MAX = 2000;
 	public final static double FORCE_MIN = 80;
 	public final static double COLLISION_REDUCTOR = 3;
-	//public final static double FRICTION_POURCENTAGE = 0.000000000000001;
+	public final static double FRICTION_POURCENTAGE = 0.2;
 	public final static double DEACREASE_TIMER_DESAPPEAR_GCHARACTER = 10;
 	
 }

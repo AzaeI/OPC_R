@@ -35,7 +35,7 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
 
     private final Point SLINGSHOT_CENTER = new Point(
             PLATEFORM_WIDTH - SLINGSHOT_WIDTH / 2,
-            PLATEFORM_HEIGHT + PLATEFORM_POSY + SLINGSHOT_HEIGHT  + SLINGSHOT_OFFSET / 2);
+            PLATEFORM_HEIGHT + PLATEFORM_POSY + SLINGSHOT_HEIGHT + SLINGSHOT_OFFSET / 2);
 
     private ArrayList<Decor> decors;
     private ArrayList<Bird> birds;
@@ -51,6 +51,7 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
     private ArrayList<GCharacter> gPigToRemove;
 
     private BufferedImage backG;
+
     {
         try {
             backG = ImageIO.read(new File(Constants.BG_FILE));
@@ -59,8 +60,8 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         }
     }
 
-    private int timerRelaodBird   = 1000;     //1sec
-    private final int timerDiePig       = 1000;     //1sec
+    private int timerRelaodBird = 1000;     //1sec
+    private final int timerDiePig = 1000;     //1sec
 
     private volatile boolean shutdown;
 
@@ -81,7 +82,7 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         pigs = new ArrayList();
         gravities = new ArrayList();
 
-        gDecors= new ArrayList();
+        gDecors = new ArrayList();
         gBirds = new ArrayList();
         gPigs = new ArrayList();
         gGravities = new ArrayList();
@@ -105,9 +106,10 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         }
         return null;
     }
+
     private void newCurrentBird() {
-        for (Bird b: birds) {
-            b.setOrder(b.getOrder()-1);
+        for (Bird b : birds) {
+            b.setOrder(b.getOrder() - 1);
         }
     }
 
@@ -168,7 +170,7 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         // SLINGSHOT
         g.setColor(new Color(102, 51, 0));
         g.fillRect(PLATEFORM_WIDTH - SLINGSHOT_WIDTH,
-                PLATEFORM_HEIGHT+ PLATEFORM_POSY,
+                PLATEFORM_HEIGHT + PLATEFORM_POSY,
                 SLINGSHOT_WIDTH,
                 SLINGSHOT_HEIGHT);
         Stroke s = g.getStroke();
@@ -190,7 +192,7 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
             if (d.getGo().getLength() == 0) d.getGo().setLength(getHeight());
             d.draw(g);
         }
-        for (GCharacter b: gBirds) {
+        for (GCharacter b : gBirds) {
             b.draw(g);
         }
         for (GCharacter p : gPigs) {
@@ -202,7 +204,7 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         for (GGravity gr : gGravities) {
             if (gr.getGo().getWidth() == 0) gr.getGo().setWidth(getWidth());
             if (gr.getGo().getLength() == 0) gr.getGo().setLength(getHeight());
-            if (gr.getGo().getRadius() == 0 ) gr.getGo().setRadius(getWidth());
+            if (gr.getGo().getRadius() == 0) gr.getGo().setRadius(getWidth());
             gr.draw(g);
         }
 
@@ -213,8 +215,8 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         int max = SLINGSHOT_HEIGHT;
 
        /* if (tmp_MouseP.distance(SLINGSHOT_CENTER) < max ) {*/
-                getFirstBird().setPosX(mouseEvent.getX() - currentBird.getWidth() / 2);
-                getFirstBird().setPosY(getHeight() - mouseEvent.getY() - currentBird.getLength() / 2 );
+        getFirstBird().setPosX(mouseEvent.getX() - currentBird.getWidth() / 2);
+        getFirstBird().setPosY(getHeight() - mouseEvent.getY() - currentBird.getLength() / 2);
       /*  } else {
             Point tmp = Tools.interpolationByDistance(SLINGSHOT_CENTER, tmp_MouseP, max);
 
@@ -222,9 +224,10 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
             getFirstBird().setPosY(tmp.y - currentBird.getLength() / 2 );
         }*/
     }
+
     public void mouseReleased(MouseEvent mouseEvent) {
         double distance = SLINGSHOT_CENTER.distance(currentBird.getVector().getCenter());
-        if (!( distance < Constants.FORCE_MIN)) {
+        if (!(distance < Constants.FORCE_MIN)) {
             currentBird.getVector().setDirection((Point) SLINGSHOT_CENTER.clone());
         } else {
             Point tmp = Tools.interpolationByDistance(currentBird.getVector().getCenter(), SLINGSHOT_CENTER, Constants.FORCE_MIN);
@@ -236,7 +239,10 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
 
     public void run() {
         while (!shutdown) {
-            try { Thread.currentThread().sleep(10); } catch(InterruptedException e) { }
+            try {
+                Thread.currentThread().sleep(10);
+            } catch (InterruptedException e) {
+            }
             collisionManager.checkCollision();
             if (checkWinCondition()) {
                 closeGame();
@@ -246,7 +252,7 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
             pigToRemove = new ArrayList();
             //Timer reload bird
             if (currentBird == null) {
-                timerRelaodBird-=10;
+                timerRelaodBird -= 10;
             }
 
             //Reload new bird
@@ -268,7 +274,7 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
             }
             if (birds.size() != 0) {
                 for (Bird b : birds) {
-                    if (b.isSelected()){
+                    if (b.isSelected()) {
                         b.move();
                         b.applyFriction();
                         b.setState(GameObjectState.FLYING);
@@ -310,7 +316,7 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         }
     }
 
-    private boolean checkWinCondition(){
+    private boolean checkWinCondition() {
         for (GCharacter gc : gPigs) {
             if (gc.getGo().getState() != GameObjectState.TOMB) return false;
         }
@@ -322,10 +328,18 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         this.shutdown = true;
     }
 
-    public void mouseEntered(MouseEvent mouseEvent) {}
-    public void mouseExited(MouseEvent mouseEvent) {}
-    public void mousePressed(MouseEvent mouseEvent) {}
-    public void mouseMoved(MouseEvent mouseEvent) {}
+    public void mouseEntered(MouseEvent mouseEvent) {
+    }
+
+    public void mouseExited(MouseEvent mouseEvent) {
+    }
+
+    public void mousePressed(MouseEvent mouseEvent) {
+    }
+
+    public void mouseMoved(MouseEvent mouseEvent) {
+    }
+
     public void mouseClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getX() < 50 && mouseEvent.getY() < 20) {
             closeGame();

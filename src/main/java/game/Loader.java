@@ -17,7 +17,6 @@ import game.objects.impl.Decor.Structure;
 import game.objects.impl.Pig.HelmetPig;
 import game.objects.impl.gravity.RoundGravity;
 import game.objects.impl.gravity.SquareGravity;
-import game.physics.Vector;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -116,7 +115,6 @@ public class Loader {
 
                     b.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
 
-                    b.setVector(new Vector());
                     return b;
                 case "BlueBird":
                     b = new BlueBird();
@@ -133,7 +131,6 @@ public class Loader {
 
                     b.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
 
-                    b.setVector(new Vector());
                     return b;
                 default:
                     break;
@@ -192,7 +189,6 @@ public class Loader {
 
                     p.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
 
-                    p.setVector(new Vector());
                     return p;
                 case "HelmetPig":
                     p = new HelmetPig();
@@ -208,7 +204,6 @@ public class Loader {
 
                     p.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
 
-                    p.setVector(new Vector());
                     return p;
                 default:
                     break;
@@ -264,7 +259,6 @@ public class Loader {
 
                     d.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
 
-                    d.setVector(new Vector());
                     return d;
                 case "Ground":
                     d = new Ground();
@@ -277,7 +271,6 @@ public class Loader {
 
                     d.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
 
-                    d.setVector(new Vector());
                     return d;
                 case "Grass":
                     d = new Grass();
@@ -290,7 +283,6 @@ public class Loader {
 
                     d.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
 
-                    d.setVector(new Vector());
                     return d;
                 case "Wall":
                     d = new Grass();
@@ -303,7 +295,6 @@ public class Loader {
 
                     d.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
 
-                    d.setVector(new Vector());
                     return d;
                 default:
                     break;
@@ -350,14 +341,12 @@ public class Loader {
                     g = new SquareGravity();
                     g.setGravity(Double.parseDouble(eElement.getElementsByTagName("force").item(0).getTextContent()));
                     g.setVisible(Boolean.parseBoolean(eElement.getElementsByTagName("isVisible").item(0).getTextContent()));
-                    g.setVector(new Vector());
                     return g;
                 case "Round":
                     g = new RoundGravity();
                     g.setGravity(Double.parseDouble(eElement.getElementsByTagName("force").item(0).getTextContent()));
                     g.setSprite(eElement.getElementsByTagName("sprite").item(0).getTextContent());
                     g.setVisible(Boolean.parseBoolean(eElement.getElementsByTagName("isVisible").item(0).getTextContent()));
-                    g.setVector(new Vector());
                     return g;
                 default:
                     break;

@@ -44,6 +44,9 @@ public class GDecor implements GGameObject {
             g.setColor(Color.RED);
             Rectangle2D r2 = new Rectangle2D.Double(go.getPosX(), go.getPosY(), go.getWidth(), go.getLength());
             g.draw(r2);
+
+            g.setColor(Color.GREEN);
+            g.drawLine(go.getVector().getCenter().x,go.getVector().getCenter().y, go.getVector().getDirection().x,  go.getVector().getDirection().y);
         }
     }
 }

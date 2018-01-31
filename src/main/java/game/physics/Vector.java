@@ -59,16 +59,26 @@ public class Vector {
         this.direction.x += v.getDirection().x - v.getCenter().x;
         this.direction.y += v.getDirection().y - v.getCenter().y;
     }
-    
-    
+
 
     public void applyFiction() {
-        //TODO
-        /*double tmpX = (direction.x - center.x) * Constants.FRICTION_POURCENTAGE;
-        double tmpY = (direction.y - center.y) * Constants.FRICTION_POURCENTAGE;
-        this.direction.x -= tmpX ;
-        this.direction.y -= tmpY;
-        System.out.println(tmpX + " : " + tmpY);*/
+        /*if (getForce() != 0) {
+            System.out.println("=======================");
+            System.out.println(getForce());
+        }
+      /*  double tmpX = (direction.x - center.x) * (1 - Constants.FRICTION_POURCENTAGE);
+        double tmpY = (direction.y - center.y) * (1 - Constants.FRICTION_POURCENTAGE);
+
+        this.direction.x -= tmpX;
+        this.direction.y -= tmpY;*/
+        //direction = Tools.interpolationByDistance(center, center,getForce()* (1 - Constants.FRICTION_POURCENTAGE));
+
+       /* if (getForce() != 0) {
+            System.out.println(getForce());
+            System.out.println("=======================");
+        }*/
+
+
     }
 
     public void stop() {
@@ -77,12 +87,18 @@ public class Vector {
     }
 
     public void reboundX() {
-        int tmp = this.direction.x - this.center.x;
-        this.direction.x = this.center.x - tmp;
+        if (getForce() > 0) {
+            int tmp = this.direction.x - this.center.x;
+            this.direction.x = this.center.x - tmp;
+            direction = Tools.interpolationByDistance(center, direction, getForce() * (1 - Constants.FRICTION_POURCENTAGE));
+        }
     }
 
     public void reboundY() {
-        int tmp = this.direction.y - this.center.y;
-        this.direction.y = this.center.y - tmp;
+        if (getForce() > 0) {
+            int tmp = this.direction.y - this.center.y;
+            this.direction.y = this.center.y - tmp;
+            direction = Tools.interpolationByDistance(center, direction, getForce() * (1 - Constants.FRICTION_POURCENTAGE));
+        }
     }
 }

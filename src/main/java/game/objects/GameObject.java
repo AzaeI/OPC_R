@@ -11,169 +11,175 @@ import java.awt.*;
 
 public abstract class GameObject {
 
-	private Color color;
-	
-	private int posX;
-	private int posY;
-	
-	private int width;
-	private int length;
-	
-	private double masse;
+    private Color color;
 
-	private Vector vector;
+    private int posX;
+    private int posY;
 
-	private int hp;
-	private int currentHp;
+    private int width;
+    private int length;
 
-	private String sprite;
+    private double masse;
 
-	private GameObjectState state;
+    private Vector vector;
 
-	private Point oldPos;
+    private int hp;
+    private int currentHp;
 
-	//FUNCTION
+    private String sprite;
 
-	public abstract void collisionWith(GameObject g);
+    private GameObjectState state;
 
-	public abstract GameObject clone();
+    private Point oldPos;
 
-	public void move() {
-		double x = vector.getDirection().x - vector.getCenter().x;
-		double y = vector.getDirection().y - vector.getCenter().y;
-		x = (x / (Constants.FORCE_MAX / vector.getForce()));
-		y = (y / (Constants.FORCE_MAX / vector.getForce()));
+    public GameObject() {
+        this.oldPos = new Point();
+        this.vector = new Vector();
+    }
 
-		if (oldPos == null) oldPos = new Point();
-		oldPos.x = posX;
-		oldPos.y = posY;
+    //FUNCTION
 
-		setPosX((int) (posX + x));
-		setPosY((int) (posY + y));
-		vector.getDirection().x = (int) (vector.getDirection().x + x);
-		vector.getDirection().y = (int) (vector.getDirection().y + y);
-	}
+    public abstract void collisionWith(GameObject g);
 
-	public void stop() {
-		this.vector.stop();
-	}
+    public abstract GameObject clone();
 
-	public void applyFriction() {
-		this.vector.applyFiction();
-	}
+    public void move() {
+        double x = vector.getDirection().x - vector.getCenter().x;
+        double y = vector.getDirection().y - vector.getCenter().y;
+        x = (x / (Constants.FORCE_MAX / vector.getForce()));
+        y = (y / (Constants.FORCE_MAX / vector.getForce()));
 
-	public void reboundX() {
-		this.vector.reboundX();
-	}
-	public void reboundY() {
-		this.vector.reboundY();
-	}
+        if (oldPos == null) oldPos = new Point();
+        oldPos.x = posX;
+        oldPos.y = posY;
 
-	//GETTER & SETTER
+        setPosX((int) (posX + x));
+        setPosY((int) (posY + y));
+        vector.getDirection().x = (int) (vector.getDirection().x + x);
+        vector.getDirection().y = (int) (vector.getDirection().y + y);
+    }
 
-	public Color getColor() {
-		return color;
-	}
+    public void stop() {
+        this.vector.stop();
+    }
 
-	public void setColor(Color color) {
-		this.color = color;
-	}
+    public void applyFriction() {
+        this.vector.applyFiction();
+    }
 
-	public int getPosX() {
-		return posX;
-	}
+    public void reboundX() {
+        this.vector.reboundX();
+    }
 
-	public void setPosX(int posX) {
-		this.posX = posX;
-		this.vector.getCenter().x = posX + width/2;
-	}
+    public void reboundY() {
+        this.vector.reboundY();
+    }
 
-	public int getPosY() {
-		return posY;
-	}
+    //GETTER & SETTER
 
-	public void setPosY(int posY) {
-		this.posY = posY;
-		this.vector.getCenter().y = posY + length/2;
-	}
+    public Color getColor() {
+        return color;
+    }
 
-	public int getWidth() {
-		return width;
-	}
+    public void setColor(Color color) {
+        this.color = color;
+    }
 
-	public void setWidth(int width) {
-		this.width = width;
-	}
+    public int getPosX() {
+        return posX;
+    }
 
-	public int getLength() {
-		return length;
-	}
+    public void setPosX(int posX) {
+        this.posX = posX;
+        this.vector.getCenter().x = posX + width / 2;
+    }
 
-	public void setLength(int length) {
-		this.length = length;
-	}
+    public int getPosY() {
+        return posY;
+    }
 
-	public double getMasse() {
-		return masse;
-	}
+    public void setPosY(int posY) {
+        this.posY = posY;
+        this.vector.getCenter().y = posY + length / 2;
+    }
 
-	public void setMasse(double masse) {
-		this.masse = masse;
-	}
+    public int getWidth() {
+        return width;
+    }
 
-	public int getHp() {
-		return hp;
-	}
+    public void setWidth(int width) {
+        this.width = width;
+    }
 
-	public void setHp(int hp) {
-		this.hp = hp;
-	}
+    public int getLength() {
+        return length;
+    }
 
-	public int getCurrentHp() {
-		return currentHp;
-	}
+    public void setLength(int length) {
+        this.length = length;
+    }
 
-	public void setCurrentHp(int currentHp) {
-		this.currentHp = currentHp;
-	}
+    public double getMasse() {
+        return masse;
+    }
 
-	public String getSprite() {
+    public void setMasse(double masse) {
+        this.masse = masse;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public int getCurrentHp() {
+        return currentHp;
+    }
+
+    public void setCurrentHp(int currentHp) {
+        this.currentHp = currentHp;
+    }
+
+    public String getSprite() {
         return sprite;
     }
 
     public String getFullSprite() {
-	    if (this instanceof Bird) return Constants.BIRD_IMG + "/" + sprite;
-	    else if (this instanceof Pig) return Constants.PIGS_IMG + "/" + sprite;
-	    else if (this instanceof Decor) return Constants.DECOR_IMG +  "/" + sprite;
-	    else if (this instanceof Gravity) return Constants.GRAVITY_IMG + "/" + sprite;
-	    else return "";
+        if (this instanceof Bird) return Constants.BIRD_IMG + "/" + sprite;
+        else if (this instanceof Pig) return Constants.PIGS_IMG + "/" + sprite;
+        else if (this instanceof Decor) return Constants.DECOR_IMG + "/" + sprite;
+        else if (this instanceof Gravity) return Constants.GRAVITY_IMG + "/" + sprite;
+        else return "";
     }
 
     public void setSprite(String sprite) {
         this.sprite = sprite;
     }
 
-	public GameObjectState getState() {
-		return state;
-	}
+    public GameObjectState getState() {
+        return state;
+    }
 
-	public void setState(GameObjectState state) {
-		this.state = state;
-	}
+    public void setState(GameObjectState state) {
+        this.state = state;
+    }
 
-	public Vector getVector() {
-		return vector;
-	}
+    public Vector getVector() {
+        return vector;
+    }
 
-	public void setVector(Vector vector) {
-		this.vector = vector;
-	}
+    public void setVector(Vector vector) {
+        this.vector = vector;
+    }
 
-	public Point getOldPos() {
-		return oldPos;
-	}
+    public Point getOldPos() {
+        return oldPos;
+    }
 
-	public void setOldPos(Point oldPos) {
-		this.oldPos = oldPos;
-	}
+    public void setOldPos(Point oldPos) {
+        this.oldPos = oldPos;
+    }
 }
