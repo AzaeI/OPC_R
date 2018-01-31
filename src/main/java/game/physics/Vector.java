@@ -56,8 +56,8 @@ public class Vector {
     }
 
     public void addVector(Vector v) {
-        this.direction.x += v.getDirection().x - v.getCenter().x;
-        this.direction.y += v.getDirection().y - v.getCenter().y;
+        this.direction.x += v.getDirection().x;
+        this.direction.y += v.getDirection().y;
     }
 
     public void stop() {
@@ -69,7 +69,7 @@ public class Vector {
         if (getForce() > 0) {
             int tmp = this.direction.x - this.center.x;
             this.direction.x = this.center.x - tmp;
-            direction = Tools.interpolationByDistance(center, direction, getForce() * (1 - Constants.FRICTION_POURCENTAGE));
+            applyFriction();
         }
     }
 
@@ -77,8 +77,12 @@ public class Vector {
         if (getForce() > 0) {
             int tmp = this.direction.y - this.center.y;
             this.direction.y = this.center.y - tmp;
-            direction = Tools.interpolationByDistance(center, direction, getForce() * (1 - Constants.FRICTION_POURCENTAGE));
+            applyFriction();
         }
+    }
+
+    public void applyFriction() {
+        direction = Tools.interpolationByDistance(center, direction, getForce() * (1 - Constants.FRICTION_POURCENTAGE));
     }
 
     public boolean isImmobile() {
