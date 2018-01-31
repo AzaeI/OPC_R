@@ -17,7 +17,7 @@ public class PlayButtonListener implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		Frame.getInstance().setPanel(new LevelPanel(level));
+		Frame.getInstance().setLevelPannel(level);
 	}
 
 }

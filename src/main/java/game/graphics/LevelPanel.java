@@ -54,7 +54,6 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
     private ArrayList<GCharacter> gBirdToRemove;
 
     private BufferedImage backG;
-
     {
         try {
             backG = ImageIO.read(new File(Constants.BG_FILE));
@@ -63,11 +62,23 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         }
     }
 
+    private BufferedImage homeBtn;
+    {
+        try {
+            homeBtn = ImageIO.read(new File(Constants.HOME));
+            homeBtn = Tools.resize(homeBtn, 100,100);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-    private int timerRelaodBird   = 1000;     //1sec
-    private final int timerDie    = 1000;     //1sec
+
+    private int timerRelaodBird = 1000;     //1sec
+    private final int timerDie = 1000;     //1sec
 
     private volatile boolean shutdown;
+    public boolean isGameFinish;
+    public boolean isWon;
 
     private CollisionManager collisionManager;
 
@@ -77,6 +88,8 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
     public LevelPanel(Level level) {
         super();
         this.level = level;
+        this.isGameFinish = false;
+        this.isWon = false;
         this.setLayout(null);
 
         shutdown = false;
@@ -164,8 +177,6 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         collisionManager = new CollisionManager(level.getObjects());
     }
 
-
-
     public void run() {
         while (!shutdown) {
             try {
@@ -173,11 +184,17 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
             } catch (InterruptedException e) {
             }
             collisionManager.checkCollision();
-            if (checkWinCondition()) {
-                closeGame();
+
+            if (checkLoseCondition()) {
+                isGameFinish = true;
+                closeGame(false);
+            } else if (checkWinCondition()) {
+                isWon = true;
+                isGameFinish = true;
+                closeGame(true);
             }
 
-            pigToRemove  = new ArrayList();
+            pigToRemove = new ArrayList();
             birdToRemove = new ArrayList();
 
             //Timer reload bird
@@ -206,10 +223,11 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
             if (birds.size() != 0) {
                 for (Bird b : birds) {
 
-                    if (b.isSelected()){
+                    if (b.isSelected()) {
                         b.reduceTTL();
-                        if (!b.isAlive() || b.getState().equals(GameObjectState.DEAD)){
+                        if (!b.isAlive() || b.getState().equals(GameObjectState.DEAD)) {
                             b.setCurrentHp(0);
+                            b.setState(GameObjectState.DEAD);
                             GCharacter c = gBirds.stream().filter(gp -> gp.getGo().equals(b)).findFirst().get();
                             c.setTimeToDisappear(timerDie);
                             gBirdToRemove.add(c);
@@ -271,7 +289,6 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         }
     }
 
-
     public void paintComponent(Graphics g2) {
         super.paintComponent(g2);
         Graphics2D g = (Graphics2D) g2;
@@ -284,7 +301,7 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         // SLINGSHOT
         g.setColor(new Color(102, 51, 0));
         g.fillRect(PLATEFORM_WIDTH - SLINGSHOT_WIDTH,
-                PLATEFORM_HEIGHT+ PLATEFORM_POSY,
+                PLATEFORM_HEIGHT + PLATEFORM_POSY,
                 SLINGSHOT_WIDTH,
                 SLINGSHOT_HEIGHT);
         Stroke s = g.getStroke();
@@ -306,8 +323,8 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
             if (d.getGo().getLength() == 0) d.getGo().setLength(getHeight());
             d.draw(g);
         }
-        for (GCharacter b: gBirds) {
-            if (b.getTimeToDisappear() <=0) {
+        for (GCharacter b : gBirds) {
+            if (b.getTimeToDisappear() <= 0) {
                 b.getGo().setState(GameObjectState.TOMB_BIRD);
             }
             b.draw(g);
@@ -321,8 +338,23 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         for (GGravity gr : gGravities) {
             if (gr.getGo().getWidth() == 0) gr.getGo().setWidth(getWidth());
             if (gr.getGo().getLength() == 0) gr.getGo().setLength(getHeight());
-            if (gr.getGo().getRadius() == 0 ) gr.getGo().setRadius(getWidth());
+            if (gr.getGo().getRadius() == 0) gr.getGo().setRadius(getWidth());
             gr.draw(g);
+        }
+
+        g.translate(0, getHeight() - 1);
+        g.scale(1, -1);
+        if (isGameFinish) {
+            g.setColor(Color.lightGray);
+            g.fillRect(getWidth()/4, getHeight()/3, getWidth()/2, getHeight()/4);
+            g.setColor(Color.BLACK);
+            g.setFont(new Font("Serif Bold", Font.BOLD, 30));
+            if (isWon) {
+                g.drawString("Vous avez gagné !",getWidth()/2 - getWidth()/5, getHeight()/2 - getHeight()/32);
+            } else {
+                g.drawString("Vous avez perdu !",getWidth()/2 - getWidth()/5, getHeight()/2 - getHeight()/32);
+            }
+            g.drawImage(homeBtn, 0, 0, null);
         }
 
     }
@@ -343,6 +375,7 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
             }
         }
     }
+
     public void mouseReleased(MouseEvent mouseEvent) {
         if (currentBird != null) {
             double distance = SLINGSHOT_CENTER.distance(currentBird.getVector().getCenter());
@@ -357,17 +390,32 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
         }
     }
 
-    private boolean checkWinCondition(){
+    private boolean checkWinCondition() {
         for (GCharacter gc : gPigs) {
-            if (gc.getGo().getState() != GameObjectState.TOMB) return false;
+            System.out.println(gc.getGo().getState());
+            if (gc.getGo().getState() != GameObjectState.DEAD) return false;
         }
         return true;
     }
 
-    private void closeGame() {
+    private boolean checkLoseCondition() {
+        for (Bird b : birds) {
+            if (b.isAlive()) return false;
+        }
+        return true;
+    }
 
-        //Frame.getInstance().setPanel(new LevelSelectorPanel());
+    private void closeGame(boolean win) {
+        //this.shutdown = true;
+        if (win) {
+
+        }
+        //Frame.getInstance().setSelectorLvPannel();
+    }
+
+    private void exitGame() {
         this.shutdown = true;
+        Frame.getInstance().setSelectorLvPannel();
     }
 
     public void mouseEntered(MouseEvent mouseEvent) {
@@ -383,8 +431,8 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
     }
 
     public void mouseClicked(MouseEvent mouseEvent) {
-        if (mouseEvent.getX() < 50 && mouseEvent.getY() < 20) {
-            closeGame();
+        if (mouseEvent.getX() < 100 && mouseEvent.getY() < 100) {
+            exitGame();
         }
     }
 }

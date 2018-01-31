@@ -100,11 +100,13 @@ public abstract class Bird extends Character {
 
     public void reduceTTL() {
         this.timeToLive -= Constants.DEACREASE_TIMER_DESAPPEAR_BIRD;
-        if (timeToLive <= 0) this.setState(GameObjectState.DEAD);
+        if (timeToLive <= 0) {
+            this.setState(GameObjectState.DEAD);
+        }
     }
 
     public boolean isAlive() {
-        if (timeToLive >= 0 || getCurrentHp() >=0 ) return true;
-        return false;
+        if (getState().equals(GameObjectState.DEAD) || getState().equals(GameObjectState.TOMB_BIRD) || getVector().isImmobile()) return false;
+        return true;
     }
 }
