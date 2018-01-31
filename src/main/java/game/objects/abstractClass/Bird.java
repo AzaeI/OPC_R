@@ -2,6 +2,10 @@ package game.objects.abstractClass;
 
 import game.objects.GameObject;
 import game.objects.GameObjectState;
+import game.objects.impl.Decor.Grass;
+import game.objects.impl.Decor.Ground;
+import game.objects.impl.Decor.Structure;
+import game.objects.impl.Decor.Wall;
 import game.physics.Vector;
 import game.tools.Constants;
 
@@ -15,30 +19,8 @@ public abstract class Bird extends Character {
     private int timeToLive;
 
     public void collisionWith(GameObject g) {
-        if (g instanceof Decor && ((Decor) g).isMovable()) {
 
-            if (this.getOldPos().x + this.getWidth() > g.getPosX() &&
-                    this.getOldPos().x < g.getPosX() + g.getWidth()) {
-                if (this.getVector().getCenter().y > g.getPosY() + g.getLength()) {
-
-                } else {
-
-                }
-            } else {
-                if (this.getVector().getCenter().x > g.getPosX() + g.getWidth()) {
-                    Vector v = new Vector();
-                    v.setCenter((Point) g.getVector().getCenter().clone());
-                    v.setDirection(new Point((int) (g.getVector().getCenter().x - this.getVector().getForce()/ Constants.COLLISION_REDUCTOR), g.getVector().getCenter().y));
-                    g.getVector().addVector(v);
-                } else {
-                    Vector v = new Vector();
-                    v.setCenter((Point) g.getVector().getCenter().clone());
-                    v.setDirection(new Point((int) (g.getVector().getCenter().x + this.getVector().getForce()/ Constants.COLLISION_REDUCTOR), g.getVector().getCenter().y));
-                    g.getVector().addVector(v);
-                }
-            }
-
-        } else if (g instanceof Pig) {
+        if (g instanceof Pig) {
 
             int hp = g.getCurrentHp();
 
@@ -63,6 +45,14 @@ public abstract class Bird extends Character {
             } else {
                 g.setState(GameObjectState.DAMAGED_1);
             }
+        } else if (g instanceof Character || (g instanceof Decor && ((Decor) g).isMovable())) {
+            Vector v = new Vector();
+            v.setCenter(new Point());
+            int x = this.getVector().getDirection().x - this.getVector().getCenter().x;
+            int y = 0;
+            v.setDirection(new Point(x, y));
+            g.getVector().addVector(v);
+            g.getVector().applyFriction();
         }
     }
 
@@ -104,7 +94,7 @@ public abstract class Bird extends Character {
     }
 
     public boolean isAlive() {
-        if (timeToLive >= 0 || getCurrentHp() >=0 ) return true;
+        if (timeToLive >= 0 || getCurrentHp() >= 0) return true;
         return false;
     }
 }
