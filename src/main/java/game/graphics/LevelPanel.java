@@ -392,7 +392,6 @@ public class LevelPanel extends Panel implements MouseMotionListener, MouseListe
 
     private boolean checkWinCondition() {
         for (GCharacter gc : gPigs) {
-            System.out.println(gc.getGo().getState());
             if (gc.getGo().getState() != GameObjectState.DEAD) return false;
         }
         return true;

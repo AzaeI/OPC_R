@@ -64,10 +64,10 @@ public abstract class Decor extends GameObject {
                 } else {
                     g.reboundX();
                     if (this.getVector().getCenter().y > g.getPosY() + g.getLength()) {
-                        System.out.println("collide right");
+                        //System.out.println("collide right");
 
                     } else {
-                        System.out.println("collide left");
+                        //System.out.println("collide left");
 
                     }
                 }
