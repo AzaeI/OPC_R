@@ -59,17 +59,6 @@ public class Vector {
         this.direction.x += v.getDirection().x - v.getCenter().x;
         this.direction.y += v.getDirection().y - v.getCenter().y;
     }
-    
-    
-
-    public void applyFiction() {
-        //TODO
-        /*double tmpX = (direction.x - center.x) * Constants.FRICTION_POURCENTAGE;
-        double tmpY = (direction.y - center.y) * Constants.FRICTION_POURCENTAGE;
-        this.direction.x -= tmpX ;
-        this.direction.y -= tmpY;
-        System.out.println(tmpX + " : " + tmpY);*/
-    }
 
     public void stop() {
         this.direction.x = center.x;

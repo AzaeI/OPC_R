@@ -17,7 +17,7 @@
 
             <radius>0</radius>
 		</object>
-        <!--<object>
+        <object>
             <type>Gravity</type>
             <class>Round</class>
 
@@ -28,7 +28,7 @@
             <length>30</length>
 
             <radius>150</radius>
-        </object>-->
+        </object>
 
         <!--BIRD-->
 		<object>
@@ -45,7 +45,7 @@
         <!--PIGS-->
 		<object>
 			<type>Pig</type>
-			<class>HelmetPig</class>
+			<class>ClassicPig</class>
 
 			<posX>440</posX>
 			<posY>60</posY>

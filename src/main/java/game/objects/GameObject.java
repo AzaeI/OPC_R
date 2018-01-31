@@ -58,10 +58,6 @@ public abstract class GameObject {
 		this.vector.stop();
 	}
 
-	public void applyFriction() {
-		this.vector.applyFiction();
-	}
-
 	public void reboundX() {
 		this.vector.reboundX();
 	}
