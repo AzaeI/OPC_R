@@ -53,6 +53,7 @@ public abstract class GameObject {
         oldPos.x = posX;
         oldPos.y = posY;
 
+
         setPosX((int) (posX + x));
         setPosY((int) (posY + y));
         vector.getDirection().x = (int) (vector.getDirection().x + x);
@@ -61,10 +62,6 @@ public abstract class GameObject {
 
     public void stop() {
         this.vector.stop();
-    }
-
-    public void applyFriction() {
-        this.vector.applyFiction();
     }
 
     public void reboundX() {

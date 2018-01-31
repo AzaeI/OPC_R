@@ -20,6 +20,8 @@ public class GCharacter implements GGameObject {
     BufferedImage sprite_2;
     BufferedImage sprite_3;
     BufferedImage tomb;
+    BufferedImage tombbird;
+
 
     public GCharacter(Character go, int timeToDisappear) {
         this.go = go;
@@ -30,11 +32,13 @@ public class GCharacter implements GGameObject {
             sprite_2 = ImageIO.read(new File(go.getFullSprite()+"_2.png"));
             sprite_3 = ImageIO.read(new File(go.getFullSprite()+"_3.png"));
             tomb     = ImageIO.read(new File(Constants.TOMB_FILE));
+            tombbird = ImageIO.read(new File(Constants.TOMB_BIRD_FILE));
 
             sprite_1 = Tools.resize(sprite_1, go.getWidth(), go.getLength());
             sprite_2 = Tools.resize(sprite_2, go.getWidth(), go.getLength());
             sprite_3 = Tools.resize(sprite_3, go.getWidth(), go.getLength());
             tomb     = Tools.resize(tomb, go.getWidth(), go.getLength());
+            tombbird = Tools.resize(tombbird, go.getWidth(), go.getLength());
         } catch (Exception e) { e.printStackTrace(); }
 
     }
@@ -73,6 +77,9 @@ public class GCharacter implements GGameObject {
                 break;
             case TOMB:
                 g.drawImage(tomb, go.getPosX(), go.getPosY(),null);
+                break;
+            case TOMB_BIRD:
+                g.drawImage(tombbird, go.getPosX(), go.getPosY(),null);
                 break;
         }
         if (Constants.DEBUG) {

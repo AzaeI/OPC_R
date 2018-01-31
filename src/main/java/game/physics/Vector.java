@@ -60,27 +60,6 @@ public class Vector {
         this.direction.y += v.getDirection().y - v.getCenter().y;
     }
 
-
-    public void applyFiction() {
-        /*if (getForce() != 0) {
-            System.out.println("=======================");
-            System.out.println(getForce());
-        }
-      /*  double tmpX = (direction.x - center.x) * (1 - Constants.FRICTION_POURCENTAGE);
-        double tmpY = (direction.y - center.y) * (1 - Constants.FRICTION_POURCENTAGE);
-
-        this.direction.x -= tmpX;
-        this.direction.y -= tmpY;*/
-        //direction = Tools.interpolationByDistance(center, center,getForce()* (1 - Constants.FRICTION_POURCENTAGE));
-
-       /* if (getForce() != 0) {
-            System.out.println(getForce());
-            System.out.println("=======================");
-        }*/
-
-
-    }
-
     public void stop() {
         this.direction.x = center.x;
         this.direction.y = center.y;

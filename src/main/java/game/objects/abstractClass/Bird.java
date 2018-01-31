@@ -12,6 +12,7 @@ public abstract class Bird extends Character {
     private double speed;
     private int order;
     private boolean isSelected;
+    private int timeToLive;
 
     public void collisionWith(GameObject g) {
         if (g instanceof Decor && ((Decor) g).isMovable()) {
@@ -87,5 +88,23 @@ public abstract class Bird extends Character {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
+    }
+
+    public int getTimeToLive() {
+        return timeToLive;
+    }
+
+    public void setTimeToLive(int timeToLive) {
+        this.timeToLive = timeToLive;
+    }
+
+    public void reduceTTL() {
+        this.timeToLive -= Constants.DEACREASE_TIMER_DESAPPEAR_BIRD;
+        if (timeToLive <= 0) this.setState(GameObjectState.DEAD);
+    }
+
+    public boolean isAlive() {
+        if (timeToLive >= 0 || getCurrentHp() >=0 ) return true;
+        return false;
     }
 }
